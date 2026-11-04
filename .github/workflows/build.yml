@@ -31,7 +31,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: shney-turim-v${{ steps.ver.outputs.version }}
-          path: releases/shney-turim-v${{ steps.ver.outputs.version }}.otzplugin
+          path: dist/shney-turim-v${{ steps.ver.outputs.version }}.otzplugin
 
       - name: Create or update GitHub Release
         env:
@@ -39,7 +39,7 @@ jobs:
           VERSION: ${{ steps.ver.outputs.version }}
         run: |
           TAG="v${VERSION}"
-          FILE="releases/shney-turim-v${VERSION}.otzplugin"
+          FILE="dist/shney-turim-v${VERSION}.otzplugin"
           if gh release view "$TAG" >/dev/null 2>&1; then
             gh release upload "$TAG" "$FILE" --clobber
           else

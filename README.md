@@ -24,7 +24,7 @@
 | נתיב | תיאור |
 |------|--------|
 | `src/` | קוד המקור של התוסף (`manifest.json`, `index.html` והספריות `pdf-lib` ו-`fontkit`) |
-| `releases/` | קבצי `.otzplugin` שנבנו (נוצרים גם אוטומטית, ראו למטה) |
+| `dist/` | תיקיית הפלט של `build.sh` (לא נשמרת במאגר) |
 | `.github/workflows/` | בנייה אוטומטית של התוסף |
 | `build.sh` | סקריפט שאורז את `src/` לקובץ `.otzplugin` חדש |
 
@@ -34,7 +34,7 @@
 ./build.sh
 ```
 
-הסקריפט קורא את הגרסה מ-`src/manifest.json` ויוצר את `releases/shney-turim-v<גרסה>.otzplugin`.
+הסקריפט קורא את הגרסה מ-`src/manifest.json` ויוצר את `dist/shney-turim-v<גרסה>.otzplugin`.
 
 ## בנייה אוטומטית
 
