@@ -1,7 +1,7 @@
 {
     "id":  "shney-turim-plugin",
     "name":  "שני טורים",
-    "version":  "7.0.0",
+    "version":  "9.0.0",
     "description":  "הצגת מסמך כספר מודפס עם אפשרות למספר טורים",
     "author":"D9+ח.צ וחד בדרא מוקדש בל\"נ לע\"נ הבה\"ח מאיר בן יבדלחט\"א ר' אברהם הראל שאער זצ\"ל",
     "type":  "webapp",
@@ -12,7 +12,9 @@
     "permissions":  [
                         "library.books.read",
                         "library.content.read",
+                        "library.links.read",
                         "reader.open",
+                        "notes.read",
                         "reader.toolbar",
                         "app.startup_contributions",
                         "app.info.read",
