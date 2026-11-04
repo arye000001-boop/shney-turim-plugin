@@ -1,0 +1,50 @@
+name: Build plugin
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "src/**"
+      - "build.sh"
+      - ".github/workflows/build.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Read version from manifest
+        id: ver
+        run: |
+          VERSION=$(python3 -c "import json;print(json.load(open(\"src/manifest.json\",encoding=\"utf-8-sig\"))[\"version\"])")
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+
+      - name: Build .otzplugin
+        run: ./build.sh
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: shney-turim-v${{ steps.ver.outputs.version }}
+          path: releases/shney-turim-v${{ steps.ver.outputs.version }}.otzplugin
+
+      - name: Create or update GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          VERSION: ${{ steps.ver.outputs.version }}
+        run: |
+          TAG="v${VERSION}"
+          FILE="releases/shney-turim-v${VERSION}.otzplugin"
+          if gh release view "$TAG" >/dev/null 2>&1; then
+            gh release upload "$TAG" "$FILE" --clobber
+          else
+            gh release create "$TAG" "$FILE" \
+              --target "${{ github.sha }}" \
+              --title "תוסף שני טורים – גרסה ${VERSION}" \
+              --notes "גרסה ${VERSION} של תוסף שני טורים לאוצריא. להתקנה הורידו את קובץ ה-.otzplugin מהנכסים (Assets) למטה."
+          fi

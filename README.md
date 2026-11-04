@@ -8,7 +8,7 @@
 
 ## התקנה
 
-1. הורידו את קובץ ההתקנה העדכני מתיקיית [`releases`](releases/) (קובץ בסיומת `.otzplugin`).
+1. הורידו את קובץ ההתקנה העדכני מדף ה-[Releases](../../releases/latest) (קובץ בסיומת `.otzplugin`).
 2. התקינו אותו באוצריא דרך מנגנון ההתקנה של תוספים.
 
 דרישת מינימום: אוצריא בגרסה `0.9.97` ומעלה.
@@ -24,7 +24,8 @@
 | נתיב | תיאור |
 |------|--------|
 | `src/` | קוד המקור של התוסף (`manifest.json`, `index.html` והספריות `pdf-lib` ו-`fontkit`) |
-| `releases/` | קבצי `.otzplugin` מוכנים להתקנה |
+| `releases/` | קבצי `.otzplugin` שנבנו (נוצרים גם אוטומטית, ראו למטה) |
+| `.github/workflows/` | בנייה אוטומטית של התוסף |
 | `build.sh` | סקריפט שאורז את `src/` לקובץ `.otzplugin` חדש |
 
 ## בנייה מחדש
@@ -34,6 +35,11 @@
 ```
 
 הסקריפט קורא את הגרסה מ-`src/manifest.json` ויוצר את `releases/shney-turim-v<גרסה>.otzplugin`.
+
+## בנייה אוטומטית
+
+בכל push ל-`main` שמשנה את `src/`, GitHub Actions בונה את קובץ ה-`.otzplugin` ומעלה אותו ל-Release של הגרסה הנוכחית (לפי `version` ב-`src/manifest.json`).
+כדי להוציא גרסה חדשה, מעדכנים את `version` ב-`src/manifest.json` ועושים push, והשאר קורה לבד.
 
 ## ספריות צד שלישי
 
