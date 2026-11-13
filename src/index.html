@@ -919,6 +919,233 @@
             color: var(--color-on-surface-subtle);
         }
 
+        /* --- מסך הפתיחה: הספרייה בצד ימין; בחירת קובץ מהמחשב וחיפוש (כפי שהיו) בצד שמאל --- */
+        body #preview-area:has(> .library-layout) {
+            padding: 0 !important;
+            overflow: hidden !important;
+            display: block !important;
+        }
+        .new-book-tab-content.library-layout {
+            display: flex;
+            flex-direction: row;
+            height: 100%;
+            min-height: 0;
+            padding: 0;
+            overflow: hidden;
+            background: var(--color-surface-container);
+        }
+        .library-main {
+            flex: 1 1 auto;
+            min-width: 0;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        .library-grid-scroll {
+            flex: 1 1 auto;
+            min-height: 0;
+            overflow-y: auto;
+            padding: 12px 16px 24px 16px;
+        }
+        .library-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 14px;
+        }
+        .library-grid .library-empty {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 40px;
+            color: var(--color-on-surface-subtle);
+            font-size: 0.95rem;
+        }
+        .library-card {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            box-sizing: border-box;
+            aspect-ratio: 1.8 / 1;
+            min-height: 96px;
+            padding: 0 18px;
+            background: var(--color-surface);
+            color: var(--color-on-surface);
+            border: 1px solid transparent;
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            transition: border-color 0.15s, background 0.15s;
+        }
+        .library-card:hover, .library-card:focus-visible {
+            border-color: var(--color-primary);
+            outline: none;
+        }
+        .library-card-text {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            min-width: 0;
+            flex: 1 1 auto;
+            text-align: start;
+        }
+        .library-card-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            word-break: break-word;
+        }
+        .library-card-author {
+            font-size: 0.85rem;
+            color: var(--color-on-surface-subtle);
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+        .library-card-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex: 0 0 auto;
+        }
+        .library-card-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            padding: 0;
+            border: none;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            color: var(--color-on-surface);
+            transition: filter 0.15s;
+        }
+        .library-card-btn svg { width: 20px; height: 20px; }
+        .library-card-btn:hover { filter: brightness(0.94); }
+        .library-card-open { background: var(--color-primary-container); }
+        .library-card-info { background: var(--color-surface-container-highest); }
+
+        .library-breadcrumbs {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 2px;
+            padding: 10px 20px 0 20px;
+            font-size: 0.95rem;
+        }
+        .library-breadcrumbs[hidden] { display: none; }
+        .library-crumb {
+            display: inline-flex;
+            align-items: center;
+            border: none;
+            background: transparent;
+            border-radius: var(--radius-pill);
+            padding: 4px 10px;
+            font-family: inherit;
+            font-size: inherit;
+            color: var(--color-on-surface-variant);
+            cursor: pointer;
+            transition: background 0.15s;
+        }
+        .library-crumb:hover { background: var(--color-surface-container-highest); }
+        .library-crumb.current { color: var(--color-primary); cursor: default; }
+        .library-crumb.current:hover { background: transparent; }
+        .library-crumb svg { width: 20px; height: 20px; }
+        .library-crumb-sep { width: 14px; height: 14px; color: var(--color-on-surface-subtle); flex: 0 0 auto; }
+
+        .library-side-pane {
+            flex: 0 0 clamp(320px, 36%, 560px);
+            min-width: 0;
+            box-sizing: border-box;
+            margin: 6px;
+            border-radius: var(--radius-md);
+            background: var(--color-surface);
+            overflow-y: auto;
+        }
+        .library-layout.library-side-hidden .library-side-pane { display: none; }
+        .library-side-inner {
+            padding: 32px 24px;
+            box-sizing: border-box;
+            min-height: 100%;
+        }
+        @media (max-width: 820px) {
+            .new-book-tab-content.library-layout { flex-direction: column; overflow-y: auto; }
+            .library-main { flex: 0 0 auto; overflow: visible; }
+            .library-grid-scroll { overflow: visible; }
+            .library-side-pane { flex: 0 0 auto; overflow: visible; }
+        }
+
+        /* שורת האיתור בסרגל העליון של מסך הספרייה */
+        .library-search-pill {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex: 1 1 auto;
+            min-width: 0;
+            max-width: 640px;
+            margin-inline-start: 16px;
+            margin-inline-end: auto;
+            padding: 0 12px;
+            height: 40px;
+            box-sizing: border-box;
+            border-radius: var(--radius-md);
+            background: var(--color-surface-container-highest);
+        }
+        .library-search-pill:focus-within { box-shadow: 0 0 0 2px var(--color-primary); }
+        .library-search-pill input {
+            flex: 1 1 auto;
+            min-width: 0;
+            border: none;
+            outline: none;
+            background: transparent;
+            font-family: inherit;
+            font-size: 0.95rem;
+            color: var(--color-on-surface);
+        }
+        .library-search-icon { width: 20px; height: 20px; fill: var(--color-on-surface-variant); flex: 0 0 auto; }
+        .library-pane-toggle {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+            padding: 0;
+            border: none;
+            border-radius: var(--radius-sm);
+            background: transparent;
+            color: var(--color-on-surface-variant);
+            cursor: pointer;
+            flex: 0 0 auto;
+        }
+        .library-pane-toggle svg { width: 18px; height: 18px; }
+        .library-pane-toggle:hover { background: color-mix(in srgb, var(--color-on-surface) 12%, transparent); }
+        #library-btn-up svg, #library-btn-home svg { fill: none; }
+        #library-btn-up.is-disabled { opacity: 0.35; cursor: default; }
+
+        /* חלונית פרטים (כפתור ה"i" שבכרטיס) */
+        .library-info-pop {
+            position: fixed;
+            z-index: 10002;
+            width: min(340px, 92vw);
+            max-height: 60vh;
+            overflow-y: auto;
+            box-sizing: border-box;
+            padding: 14px 16px;
+            border-radius: var(--radius-md);
+            background: var(--color-surface);
+            color: var(--color-on-surface);
+            border: 1px solid var(--color-border-subtle);
+            box-shadow: 0 6px 22px rgba(0, 0, 0, 0.18);
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+        .library-info-title { font-weight: 700; font-size: 1rem; margin-bottom: 6px; }
+        .library-info-row { margin-top: 4px; }
+        .library-info-row b { font-weight: 600; color: var(--color-on-surface-variant); }
+
         /* --- אזור מרכזי --- */
         .main-content {
             flex: 1;
@@ -1093,6 +1320,146 @@
         }
         body.compact-toolbar .tab-bar-outer {
             align-items: flex-end;
+        }
+
+
+        /* --- סרגל כלים: מונה עמודים, כותרת ניווט ממורכזת, ותפריט "עוד" (שלוש נקודות) --- */
+        .page-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 3px;
+            direction: ltr;
+            font-size: 0.95rem;
+            color: var(--color-on-surface);
+            margin-inline-end: 4px;
+            white-space: nowrap;
+        }
+        .page-indicator input {
+            width: 3ch;
+            text-align: center;
+            font: inherit;
+            color: var(--color-on-surface);
+            background: var(--color-surface);
+            border: 1px solid var(--color-border-subtle);
+            border-radius: var(--radius-sm);
+            padding: 3px 4px;
+            outline: none;
+        }
+        .page-indicator input:focus {
+            border-color: var(--color-primary);
+        }
+        .page-indicator-sep, .page-indicator-total { opacity: 0.85; }
+
+        .toolbar-nav-center {
+            position: absolute;
+            top: 50%;
+            left: var(--nav-center-left, calc(50% - 220px));
+            transform: translateY(-50%);
+            width: var(--nav-center-w, 440px);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 2px;
+            z-index: 1;
+        }
+        .toolbar-nav-center.nav-center-hidden { display: none; }
+        body.split-pane-b .toolbar-nav-center,
+        body:has(#split-view-wrapper.split-active) .toolbar-nav-center { display: none !important; }
+        .toolbar-nav-center.nav-center-empty .nav-heading-title-wrap,
+        .toolbar-nav-center.nav-center-empty .nav-heading-btn { visibility: hidden; }
+
+        .nav-heading-btn {
+            flex: 0 0 auto;
+            background: transparent;
+            border: none;
+            color: var(--color-on-surface);
+            cursor: pointer;
+            padding: 6px;
+            border-radius: var(--radius-pill);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s, opacity 0.2s;
+        }
+        .nav-heading-btn svg { width: 22px; height: 22px; }
+        .nav-heading-btn:hover:not(.is-disabled) { background: color-mix(in srgb, var(--color-on-surface) 14%, transparent); }
+        .nav-heading-btn.is-disabled { opacity: 0.3; cursor: default; }
+        body.compact-toolbar .nav-heading-btn { padding: 4px; }
+        body.compact-toolbar .nav-heading-btn svg { width: 20px; height: 20px; }
+        body.compact-toolbar .nav-heading-title { font-size: 0.9rem; }
+
+        .nav-heading-title-wrap {
+            flex: 1 1 auto;
+            min-width: 0;
+            overflow: hidden;
+            text-align: center;
+        }
+        .nav-heading-title {
+            display: block;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            font-size: 1.05rem;
+            font-weight: 500;
+            color: var(--color-on-surface);
+            cursor: default;
+        }
+
+        /* בועת הכותרת המלאה בריחוף - עיצוב "פיל" עם מסגרת דקה */
+        #nav-heading-tooltip {
+            position: fixed;
+            z-index: 10001;
+            max-width: min(92vw, 900px);
+            padding: 4px 14px;
+            border-radius: 12px;
+            border: 1px solid color-mix(in srgb, var(--color-on-surface) 22%, transparent);
+            background: var(--color-surface-container);
+            color: var(--color-on-surface);
+            font-size: 1.05rem;
+            font-weight: 400;
+            line-height: 1.5;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.12s ease;
+        }
+        #nav-heading-tooltip.visible { opacity: 1; }
+
+        .toolbar-main > .toolbar-side-start { max-width: var(--nav-start-max, none); }
+
+        /* תפריט "עוד" (שלוש נקודות) בקצה השמאלי של הסרגל */
+        .popover.more-menu {
+            width: 230px;
+            padding: 6px;
+            transform-origin: top left;
+        }
+        .more-menu-item {
+            width: 100%;
+            box-sizing: border-box;
+            background: transparent;
+            border: none;
+            border-radius: var(--radius-sm);
+            color: var(--color-on-surface);
+            font-family: inherit;
+            font-size: 0.95rem;
+            text-align: start;
+            padding: 10px 12px;
+        }
+        .more-menu-item:disabled { opacity: 0.4; cursor: not-allowed; }
+        .more-menu-item:hover:not(:disabled) { background: var(--color-primary-subtle); }
+        .more-menu-item svg { width: 22px; height: 22px; flex: 0 0 auto; fill: currentColor; }
+        .more-menu-text { flex: 1 1 auto; }
+        .more-menu-value { font-size: 0.85rem; color: var(--color-on-surface-subtle); }
+        .more-menu-item svg.more-menu-chevron { width: 16px; height: 16px; transition: transform 0.15s; }
+        #column-toggle.open .more-menu-chevron { transform: rotate(180deg); }
+        .more-menu-sub { display: none; padding: 2px 0 2px 0; }
+        .more-menu-sub.open { display: block; }
+        .more-menu-sub .popover-item {
+            padding: 8px 12px 8px 12px;
+            padding-inline-start: 46px;
+            border-radius: var(--radius-sm);
+            font-size: 0.92rem;
         }
 
         /* scrim — מוצג רק כשפאנל ההגדרות פתוח */
@@ -1610,20 +1977,30 @@
         }
 
         /* הדגשת תוצאות חיפוש בצבע הערכה של התוכנה (primary) במקום אדום צורם */
+        /* צבע הדגשה רך (שקוף למחצה) - משמש גם לתוצאות חיפוש וגם לסימון טקסט (::selection), כך ששניהם נראים אותו דבר */
+        :root { --search-hl-bg: color-mix(in srgb, var(--color-primary) 24%, transparent); }
+
         .search-result-snippet mark,
         .search-highlight {
-            background: var(--color-primary-subtle);
-            color: var(--color-primary);
+            background: var(--search-hl-bg);
+            color: inherit;
             font-weight: 700;
             border-radius: 3px;
             padding: 0 1px;
         }
 
+        /* התוצאה הנוכחית: אותו צבע, מעט עמוק יותר כדי שתבלוט מבין שאר התוצאות - ועדיין רך, בלי טקסט לבן */
         mark.search-highlight.active-match {
-            background: var(--color-primary);
-            color: var(--color-on-primary);
+            background: color-mix(in srgb, var(--color-primary) 42%, transparent);
+            color: inherit;
             border-radius: 3px;
         }
+
+        ::selection { background: var(--search-hl-bg); }
+        ::-moz-selection { background: var(--search-hl-bg); }
+        /* סימון פסקה בלחיצה אחת (נפרד מסימון הטקסט הידני) - אותו צבע הדגשה, ולא מודפס */
+        .print-page .para-click-sel { background: var(--search-hl-bg); border-radius: 4px; }
+        @media print { .para-click-sel { background: transparent !important; } }
 
         .search-empty {
             padding: 18px 16px;
@@ -2231,7 +2608,8 @@
             grid-template-columns: repeat(2, max-content);
             justify-content: center;
             align-content: start;
-            column-gap: 30px;
+            /* הרווח בין שני העמודים = עובי פס הגלילה (8px, ראו ::-webkit-scrollbar למטה) */
+            column-gap: 8px;
         }
 
         /* --- עיצוב דף בודד (גודל ניתן להתאמה אישית דרך --page-width/--page-height) --- */
@@ -2389,44 +2767,22 @@
             opacity: 0.6;
         }
 
-/* --- עיצוב גלובלי לפסי גלילה (לכל האלמנטים באפליקציה) --- */
-        
-        /* גובה ורוחב של כל קווי הגלילה באפליקציה */
-        ::-webkit-scrollbar {
-            width: 8px;
-            height: 8px;
+/* --- עיצוב גלובלי לפסי גלילה (לכל האלמנטים באפליקציה) ---
+   אותו מראה כמו בתוסף הצופה: צרים (--sb-w), רקע שקוף, בלי חיצים, ואגודל עגול חצי-שקוף שמתחזק בריחוף. */
+        :root { --sb-w: 8px; --sb-thumb: rgba(121, 116, 126, 0.45); --sb-thumb-hover: rgba(121, 116, 126, 0.8); }
+        @supports (color: color-mix(in srgb, red 50%, transparent)) {
+            :root {
+                --sb-thumb: color-mix(in srgb, var(--color-outline) 50%, transparent);
+                --sb-thumb-hover: color-mix(in srgb, var(--color-outline) 85%, transparent);
+            }
         }
-
-        /* רקע קו הגלילה - שקוף לחלוטין תמיד לכל האלמנטים */
-        ::-webkit-scrollbar-track {
-            background: transparent !important;
-        }
-
-        /* הסרת חיצים (למעלה/למטה/ימין/שמאל) מכל פסי הגלילה באפליקציה */
-        ::-webkit-scrollbar-button {
-            display: none !important;
-            height: 0 !important;
-            width: 0 !important;
-        }
-
-        /* גוף הגלגלת (החלק שנע) - שקוף כברירת מחדל */
-        ::-webkit-scrollbar-thumb {
-            background: transparent;
-            border-radius: var(--radius-pill);
-        }
-
-        /* הצגת גוף הגלגלת בצבע אפור כהה ברור (אטום) רק בעת ריחוף מעל האזור הגליל */
-        *:hover::-webkit-scrollbar-thumb {
-            background: var(--color-outline) !important; /* <-- שימוש בצבע אטום וברור */
-        }
-
-        /* תאימות למנועי רינדור נוספים */
-        * {
-            scrollbar-width: thin;
-            scrollbar-color: transparent transparent;
-        }
-        *:hover {
-            scrollbar-color: var(--color-outline) transparent;
+        ::-webkit-scrollbar { width: var(--sb-w); height: var(--sb-w); background: transparent; }
+        ::-webkit-scrollbar-track, ::-webkit-scrollbar-corner, ::-webkit-scrollbar-button { background: transparent; }
+        ::-webkit-scrollbar-button { display: none; width: 0; height: 0; }
+        ::-webkit-scrollbar-thumb { background-color: var(--sb-thumb); border-radius: var(--radius-pill, 999px); background-clip: padding-box; }
+        ::-webkit-scrollbar-thumb:hover, ::-webkit-scrollbar-thumb:active { background-color: var(--sb-thumb-hover); }
+        @supports not selector(::-webkit-scrollbar) {
+            * { scrollbar-width: thin; scrollbar-color: var(--sb-thumb) transparent; }
         }
 
 /* --- הגדרות למדפסת האמיתית --- */
@@ -3162,20 +3518,31 @@
     </div>
 
     <div class="toolbar no-print" id="new-book-toolbar" style="display:none;">
+        <!-- סרגל מסך הספרייה: ימין - תיקייה אחורה / דף הבית / רענון; לידם - איתור ספר או מחבר בספרייה -->
         <div class="toolbar-side">
-            <h2 class="toolbar-title">בחר ספר לפתיחה</h2>
-        </div>
-        <div class="toolbar-side">
-            <button class="icon-btn" onclick="refreshNewBookList()" data-tooltip="רענן את רשימת הספרים הפתוחים">
+            <button class="icon-btn" id="library-btn-up" onclick="libraryGoUp()" data-tooltip="חזרה תיקייה אחת אחורה">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 19.5V5M5.5 11.5 12 5l6.5 6.5" stroke="#212121" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <button class="icon-btn" id="library-btn-home" onclick="libraryGoHome()" data-tooltip="דף הבית של הספרייה">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4.5 10.6 12 4l7.5 6.6V19a1 1 0 0 1-1 1H15v-5.5H9V20H5.5a1 1 0 0 1-1-1z" stroke="#212121" stroke-width="1.6" stroke-linejoin="round"/></svg>
+            </button>
+            <button class="icon-btn" id="library-btn-refresh" onclick="refreshNewBookList()" data-tooltip="רענן את הספרייה ואת רשימת הספרים הפתוחים">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M12 4.5C7.85786 4.5 4.5 7.85786 4.5 12C4.5 16.1421 7.85786 19.5 12 19.5C16.1421 19.5 19.5 16.1421 19.5 12C19.5 11.6236 19.4723 11.2538 19.4188 10.8923C19.3515 10.4382 19.6839 10 20.1429 10C20.5138 10 20.839 10.2562 20.8953 10.6228C20.9642 11.0718 21 11.5317 21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C14.3051 3 16.4077 3.86656 18 5.29168V4.25C18 3.83579 18.3358 3.5 18.75 3.5C19.1642 3.5 19.5 3.83579 19.5 4.25V7.25C19.5 7.66421 19.1642 8 18.75 8H15.75C15.3358 8 15 7.66421 15 7.25C15 6.83579 15.3358 6.5 15.75 6.5H17.0991C15.7609 5.25883 13.9691 4.5 12 4.5Z" fill="#212121"/>
 </svg>
             </button>
         </div>
+        <div class="library-search-pill">
+            <svg class="library-search-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M10.5 3a7.5 7.5 0 015.645 12.438l4.709 4.708a.75.75 0 01-1.06 1.061l-4.708-4.709A7.5 7.5 0 1110.5 3zm0 1.5a6 6 0 100 12 6 6 0 000-12z"/></svg>
+            <input type="text" id="library-search" placeholder="איתור ספר או מחבר בספריית אוצריא" autocomplete="off" oninput="handleLibrarySearchInput()" onkeydown="handleLibrarySearchKeydown(event)">
+            <button class="library-pane-toggle" id="library-pane-toggle" onclick="toggleLibrarySidePane()" data-tooltip="הצג/הסתר את חלונית בחירת הקובץ והחיפוש">
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="4" y="5.5" width="16" height="13" rx="2" stroke="currentColor" stroke-width="1.6"/><path d="M12 5.5v13" stroke="currentColor" stroke-width="1.6"/></svg>
+            </button>
+        </div>
     </div>
 
-    <div class="toolbar no-print">
-        <div class="toolbar-side">
+    <div class="toolbar toolbar-main no-print" id="main-toolbar">
+        <div class="toolbar-side toolbar-side-start">
             <button class="icon-btn" onclick="toggleDrawer()" data-tooltip="ניווט וחיפוש בספר">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M2.75254 17.9997H21.2525C21.6668 17.9997 22.0025 18.3355 22.0025 18.7497C22.0025 19.1294 21.7204 19.4432 21.3543 19.4928L21.2525 19.4997H2.75254C2.33832 19.4997 2.00254 19.1639 2.00254 18.7497C2.00254 18.37 2.28469 18.0562 2.65077 18.0065L2.75254 17.9997H21.2525H2.75254ZM2.75254 11.5027H21.2525C21.6668 11.5027 22.0025 11.8385 22.0025 12.2527C22.0025 12.6324 21.7204 12.9462 21.3543 12.9959L21.2525 13.0027H2.75254C2.33832 13.0027 2.00254 12.6669 2.00254 12.2527C2.00254 11.873 2.28469 11.5592 2.65077 11.5095L2.75254 11.5027H21.2525H2.75254ZM2.75168 5.00293H21.2517C21.6659 5.00293 22.0017 5.33872 22.0017 5.75293C22.0017 6.13263 21.7195 6.44642 21.3535 6.49608L21.2517 6.50293H2.75168C2.33746 6.50293 2.00168 6.16714 2.00168 5.75293C2.00168 5.37323 2.28383 5.05944 2.64991 5.00978L2.75168 5.00293H21.2517H2.75168Z" fill="#212121"/>
@@ -3191,7 +3558,29 @@
             <h2 id="toolbar-title" class="toolbar-title" data-tooltip="שם הספר הנוכחי">לא נבחר ספר</h2>
         </div>
 
+        <!-- כותרת הניווט הנוכחית (רמות 1-5) עם לחצני מעבר לכותרת הקודמת/הבאה - ממורכזת בסרגל, ברוחב קבוע
+             (ראו layoutNavCenter). מוסתרת כשהסרגל צר מדי ובתצוגה מפוצלת. -->
+        <div class="toolbar-nav-center" id="toolbar-nav-center">
+            <button class="nav-heading-btn" id="btn-heading-prev" onclick="goToAdjacentHeading(-1)" data-tooltip="הכותרת הקודמת">
+                <svg viewBox="0 0 24 24" fill="none"><path d="M6 7l5 5-5 5M12 7l5 5-5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <div class="nav-heading-title-wrap" id="nav-heading-title-wrap">
+                <span class="nav-heading-title" id="nav-heading-title"></span>
+            </div>
+            <button class="nav-heading-btn" id="btn-heading-next" onclick="goToAdjacentHeading(1)" data-tooltip="הכותרת הבאה">
+                <svg viewBox="0 0 24 24" fill="none"><path d="M18 7l-5 5 5 5M12 7l-5 5 5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+        </div>
+
         <div class="toolbar-side">
+            <!-- מונה עמודים: X/X - המספר הכללי הוא מספר העמודים שנטענו עד כה; בתיבה אפשר להקליד מספר עמוד ולעבור אליו -->
+            <div class="page-indicator" id="page-indicator" dir="ltr">
+                <input type="text" inputmode="numeric" id="page-indicator-input" autocomplete="off" value="0"
+                       onfocus="this.select()" onkeydown="onPageIndicatorKeydown(event)" onblur="onPageIndicatorBlur()"
+                       data-tooltip="מספר העמוד הנוכחי - הקלד מספר ולחץ Enter למעבר">
+                <span class="page-indicator-sep">/</span>
+                <span class="page-indicator-total" id="page-indicator-total">0</span>
+            </div>
             <!-- לחצן תצוגת ספר/גלילה - ראשון בקבוצת כפתורי העימוד והגופן -->
             <button class="icon-btn" id="btn-book-toggle" onclick="toggleBookView()" data-tooltip="עבור לתצוגת ספר דו-עמודי">
                 <svg viewBox="0 0 24 24" width="24" height="24"><path d="M6 2H18c1.1 0 2 .9 2 2v16c0 1.1-.9 2-2 2H6c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2zm0 2v16h12V4H6zm2 3h8v2H8V7zm0 4h8v2H8v-2z" fill="currentColor"/></svg>
@@ -3236,27 +3625,10 @@
 </svg>
                 </button>
             </div>
-            <div class="popover-anchor">
-                <button id="column-toggle" class="compact-button" onclick="toggleColumnPopover(event)" data-tooltip="בחר את מספר הטורים">
-                    <span id="column-toggle-label">2 טורים</span>
-                    <svg viewBox="0 0 24 24"><path d="M7.41 8.59 12 13.17l4.59-4.58L18 10l-6 6-6-6z"/></svg>
-                </button>
-                <div class="popover column-popover" id="column-popover">
-                    <div class="popover-item" onclick="selectColumn(1)">טור 1</div>
-                    <div class="popover-item" onclick="selectColumn(2)">2 טורים</div>
-                    <div class="popover-item" onclick="selectColumn(3)">3 טורים</div>
-                </div>
-            </div>
-            
             <button class="icon-btn" id="btn-commentary-panel" onclick="toggleCommentaryPanel()" disabled data-tooltip="הצג/הסתר חלונית מפרשים בצד">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 <rect x="3" y="4.5" width="12.5" height="15" rx="1.5" stroke="#212121" stroke-width="1.6"/>
 <rect x="17.5" y="4.5" width="3.5" height="15" rx="1" fill="#212121"/>
-</svg>
-            </button>
-            <button class="icon-btn" id="btn-print" onclick="openPrintExportModal()" disabled data-tooltip="הדפס או ייצא את הספר">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M15.7525 3C16.9951 3 18.0025 4.00736 18.0025 5.25L18.002 6.003L18.7525 6.00358C20.5469 6.00533 22.0011 7.45877 22.0038 9.25244L22.0071 15.2497C22.009 16.4918 21.0021 17.5002 19.7591 17.5009L18 17.5V18.75C18 19.9926 16.9926 21 15.75 21H8.25C7.00736 21 6 19.9926 6 18.75L6.00091 17.5L4.25 17.5001C3.00736 17.5001 2 16.4927 2 15.2501V9.25358C2 7.45865 3.45507 6.00358 5.25 6.00358L5.999 6.003L6 5.25C6 4.00736 7.00736 3 8.25 3H15.7525ZM15.75 13.5H8.25C7.83579 13.5 7.5 13.8358 7.5 14.25V18.75C7.5 19.1642 7.83579 19.5 8.25 19.5H15.75C16.1642 19.5 16.5 19.1642 16.5 18.75V14.25C16.5 13.8358 16.1642 13.5 15.75 13.5ZM18.7518 7.50358H5.25C4.2835 7.50358 3.5 8.28708 3.5 9.25358V15.2501C3.5 15.6643 3.83579 16.0001 4.25 16.0001L6 16V14.25C6 13.0074 7.00736 12 8.25 12H15.75C16.9926 12 18 13.0074 18 14.25L18.0009 16.0001L19.7827 16.0005C20.1855 15.9874 20.5077 15.6567 20.5071 15.2512L20.5038 9.25398C20.5024 8.28801 19.7185 7.50452 18.7518 7.50358ZM15.7525 4.5H8.25C7.83579 4.5 7.5 4.83579 7.5 5.25L7.499 6.003H16.502L16.5025 5.25C16.5025 4.83579 16.1667 4.5 15.7525 4.5Z" fill="#212121"/>
 </svg>
             </button>
             <button class="icon-btn" id="btn-fullscreen" onclick="toggleFullscreen()" data-tooltip="מסך מלא">
@@ -3264,6 +3636,36 @@
 <path d="M4 9V5.5A1.5 1.5 0 015.5 4H9M15 4h3.5A1.5 1.5 0 0120 5.5V9M20 15v3.5a1.5 1.5 0 01-1.5 1.5H15M9 20H5.5A1.5 1.5 0 014 18.5V15" stroke="#212121" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
 </svg>
             </button>
+            <div class="popover-anchor" id="more-menu-anchor">
+                <button class="icon-btn" id="btn-more" onclick="toggleMoreMenu(event)" data-tooltip="עוד אפשרויות">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<circle cx="12" cy="5.5" r="1.75" fill="#212121"/>
+<circle cx="12" cy="12" r="1.75" fill="#212121"/>
+<circle cx="12" cy="18.5" r="1.75" fill="#212121"/>
+</svg>
+                </button>
+                <div class="popover more-menu" id="more-menu">
+                    <button type="button" class="popover-item more-menu-item" id="btn-print" onclick="closeAllPopovers(); openPrintExportModal();" disabled>
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M15.7525 3C16.9951 3 18.0025 4.00736 18.0025 5.25L18.002 6.003L18.7525 6.00358C20.5469 6.00533 22.0011 7.45877 22.0038 9.25244L22.0071 15.2497C22.009 16.4918 21.0021 17.5002 19.7591 17.5009L18 17.5V18.75C18 19.9926 16.9926 21 15.75 21H8.25C7.00736 21 6 19.9926 6 18.75L6.00091 17.5L4.25 17.5001C3.00736 17.5001 2 16.4927 2 15.2501V9.25358C2 7.45865 3.45507 6.00358 5.25 6.00358L5.999 6.003L6 5.25C6 4.00736 7.00736 3 8.25 3H15.7525ZM15.75 13.5H8.25C7.83579 13.5 7.5 13.8358 7.5 14.25V18.75C7.5 19.1642 7.83579 19.5 8.25 19.5H15.75C16.1642 19.5 16.5 19.1642 16.5 18.75V14.25C16.5 13.8358 16.1642 13.5 15.75 13.5ZM18.7518 7.50358H5.25C4.2835 7.50358 3.5 8.28708 3.5 9.25358V15.2501C3.5 15.6643 3.83579 16.0001 4.25 16.0001L6 16V14.25C6 13.0074 7.00736 12 8.25 12H15.75C16.9926 12 18 13.0074 18 14.25L18.0009 16.0001L19.7827 16.0005C20.1855 15.9874 20.5077 15.6567 20.5071 15.2512L20.5038 9.25398C20.5024 8.28801 19.7185 7.50452 18.7518 7.50358ZM15.7525 4.5H8.25C7.83579 4.5 7.5 4.83579 7.5 5.25L7.499 6.003H16.502L16.5025 5.25C16.5025 4.83579 16.1667 4.5 15.7525 4.5Z" fill="#212121"/>
+</svg>
+                        <span class="more-menu-text">הדפסת מסמך</span>
+                    </button>
+                    <button type="button" class="popover-item more-menu-item" id="column-toggle" onclick="toggleColumnPopover(event)">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M4 5.5h6.5M4 9.5h6.5M4 13.5h6.5M4 17.5h6.5M13.5 5.5H20M13.5 9.5H20M13.5 13.5H20M13.5 17.5H20" stroke="#212121" stroke-width="1.6" stroke-linecap="round"/>
+</svg>
+                        <span class="more-menu-text">מספר הטורים</span>
+                        <span class="more-menu-value" id="column-toggle-label">2 טורים</span>
+                        <svg class="more-menu-chevron" viewBox="0 0 24 24"><path d="M7.41 8.59 12 13.17l4.59-4.58L18 10l-6 6-6-6z"/></svg>
+                    </button>
+                    <div class="more-menu-sub" id="column-popover">
+                        <div class="popover-item" onclick="selectColumn(1)">טור 1</div>
+                        <div class="popover-item" onclick="selectColumn(2)">2 טורים</div>
+                        <div class="popover-item" onclick="selectColumn(3)">3 טורים</div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -3520,6 +3922,17 @@
                             </select>
                         </div>
                     </div>
+                    <div class="settings-card" id="holy-names-yy-card">
+                        <div class="settings-control-group">
+                            <label style="display: flex; align-items: center; justify-content: space-between; width: 100%; cursor: pointer; font-size: 0.9rem; font-weight: 500; color: var(--color-on-surface);">
+                                <span>שם הוי"ה יופיע כ-י"י</span>
+                                <span class="switch">
+                                    <input type="checkbox" id="setting-holy-names-yy" onchange="updateHolyNamesYYSetting(this.checked); saveSettings();">
+                                    <span class="slider"></span>
+                                </span>
+                            </label>
+                        </div>
+                    </div>
                     <div class="settings-card">
                         <div class="settings-control-group">
                             <label style="display: flex; align-items: center; justify-content: space-between; width: 100%; cursor: pointer; font-size: 0.9rem; font-weight: 500; color: var(--color-on-surface);">
@@ -3647,6 +4060,19 @@
                                 <input type="range" id="setting-concurrency" min="2" max="20" step="1" value="6" oninput="updateConcurrencyValue(this.value)" onchange="saveSettings()">
                                 <span class="settings-value-indicator" id="setting-concurrency-val">6 ערוצים</span>
                             </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="settings-section-title">מסך פתיחה</div>
+                <div class="settings-group">
+                    <div class="settings-card">
+                        <div class="settings-control-group">
+                            <label for="setting-new-tab-search-focus">פוקוס אוטומטי בתיבת חיפוש</label>
+                            <select id="setting-new-tab-search-focus" class="settings-select" onchange="updateNewTabSearchFocusSetting(this.value); saveSettings();">
+                                <option value="old" selected>תיבת החיפוש של הרשימה הישנה</option>
+                                <option value="library">תיבת החיפוש של הספרייה החדשה</option>
+                            </select>
                         </div>
                     </div>
                 </div>
@@ -4250,8 +4676,10 @@
             hidePunctuation: false,
             holyNamesFilter: 'havaya', // ברירת מחדל: רק שם הוי"ה המפורש
             holyNamesDisplay: 'hyphen', // ברירת מחדל: מקף בין כל אות (י-ה-ו-ה)
+            holyNamesYY: false, // ברירת מחדל: כבוי - שם הוי"ה בכינוי יופיע כ-יקוק; מופעל: י"י
             holyNamesAggressiveAlef: false, // ברירת מחדל: כבוי - הסתרת שם "אל" אגרסיבית (גם בלי ניקוד כלל)
             compactToolbar: false,
+            newTabSearchFocus: 'old', // איזו תיבת חיפוש תקבל פוקוס במסך הפתיחה: 'old' = הרשימה הישנה (ברירת מחדל, כמו תמיד), 'library' = ספריית התיקיות החדשה
             customFontFamily: null, // null = עוקב אחרי גופן התוכנה; מחרוזת = גופן שנבחר ידנית מהתוסף, עצמאי מהתוכנה
             savedFontNames: [], // גופנים שהמשתמש הקליד/בחר ידנית בעבר - נשמרים ברשימת הבחירה לצמיתות
             pageWidthMm: 210, // A4 כברירת מחדל; ניתן לשינוי דרך הגדרות > גודל עמוד
@@ -4528,6 +4956,8 @@
             if (compactCheckbox) {
                 compactCheckbox.checked = Boolean(currentSettings.compactToolbar);
             }
+            const newTabSearchFocusSelect = document.getElementById('setting-new-tab-search-focus');
+            if (newTabSearchFocusSelect) newTabSearchFocusSelect.value = (currentSettings.newTabSearchFocus === 'library') ? 'library' : 'old';
 
             // עדכון מצב כותרת עליונה ומספרי עמודים במתג הממשק
             const showHeader = currentSettings.showHeader !== false;
@@ -4557,6 +4987,9 @@
             if (holyNamesDisplaySelect) holyNamesDisplaySelect.value = currentSettings.holyNamesDisplay || 'hyphen';
             const holyNamesDisplayCard = document.getElementById('holy-names-display-card');
             if (holyNamesDisplayCard) holyNamesDisplayCard.style.display = holyNamesFilterVal === 'none' ? 'none' : '';
+            const holyNamesYYCheckbox = document.getElementById('setting-holy-names-yy');
+            if (holyNamesYYCheckbox) holyNamesYYCheckbox.checked = Boolean(currentSettings.holyNamesYY);
+            updateHolyNamesYYCardVisibility();
 
             const aggressiveAlefCheckbox = document.getElementById('setting-aggressive-alef');
             if (aggressiveAlefCheckbox) aggressiveAlefCheckbox.checked = Boolean(currentSettings.holyNamesAggressiveAlef);
@@ -6004,6 +6437,7 @@ function updateBookViewPages(skipPanReset) {
                 nextBtn.disabled = (currentLeaf >= leaves.length);
                 prevBtn.disabled = (currentLeaf === 0);
             }
+            if (typeof scheduleNavBarUpdate === 'function') scheduleNavBarUpdate();
 
             requestAnimationFrame(updateNavArrowOverlap);
 
@@ -6174,14 +6608,33 @@ function updateHeaderSetting(val) {
 
         function updateHolyNamesFilterSetting(val) {
             currentSettings.holyNamesFilter = val;
+            if (typeof scheduleNavBarUpdate === 'function') scheduleNavBarUpdate();
             const displayCard = document.getElementById('holy-names-display-card');
             if (displayCard) displayCard.style.display = val === 'none' ? 'none' : '';
+            updateHolyNamesYYCardVisibility();
             triggerRepaginationFast();
         }
 
         function updateHolyNamesDisplaySetting(val) {
             currentSettings.holyNamesDisplay = val;
+            if (typeof scheduleNavBarUpdate === 'function') scheduleNavBarUpdate();
+            updateHolyNamesYYCardVisibility();
             triggerRepaginationFast();
+        }
+
+        // מתג "שם הוי"ה יופיע כ-י"י" רלוונטי רק כשהסינון פעיל ואופן ההצגה הוא כינוי (לא מקף)
+        function updateHolyNamesYYSetting(val) {
+            currentSettings.holyNamesYY = Boolean(val);
+            if (typeof scheduleNavBarUpdate === 'function') scheduleNavBarUpdate();
+            triggerRepaginationFast();
+        }
+
+        function updateHolyNamesYYCardVisibility() {
+            const card = document.getElementById('holy-names-yy-card');
+            if (!card) return;
+            const filterOn = (currentSettings.holyNamesFilter || 'havaya') !== 'none';
+            const kinuyMode = (currentSettings.holyNamesDisplay || 'hyphen') === 'kinuy';
+            card.style.display = (filterOn && kinuyMode) ? '' : 'none';
         }
 
         function updateAggressiveAlefSetting(val) {
@@ -6239,8 +6692,8 @@ function updateHeaderSetting(val) {
         const HOLY_NAMES = [
             { letters: 'יהוה', kinuy: 'יקוק', havayaOnly: true },
             { letters: 'אלהים', kinuy: 'אלקים', havayaOnly: false },
-            { letters: 'אדני', kinuy: "ה'", havayaOnly: false },
-            { letters: 'שדי', kinuy: 'שקי', havayaOnly: false },
+            { letters: 'אדני', kinuy: "ה'", havayaOnly: false, allowInnerHyphen: true },
+            { letters: 'שדי', kinuy: 'שקי', havayaOnly: false, allowInnerHyphen: true },
             { letters: 'יה', kinuy: 'קה', havayaOnly: false },
             { letters: 'צבאות', kinuy: 'צבקות', havayaOnly: false },
             { letters: 'אלוה', kinuy: 'אלוק', havayaOnly: false },
@@ -6254,18 +6707,24 @@ function updateHeaderSetting(val) {
             { letters: 'אלוהינו', kinuy: 'אלוקינו', havayaOnly: false },
             { letters: 'אלוהיך', kinuy: 'אלוקיך', havayaOnly: false },
             { letters: 'אלוהיכם', kinuy: 'אלוקיכם', havayaOnly: false },
-            { letters: 'אלוהיו', kinuy: 'אלוקיו', havayaOnly: false }
+            { letters: 'אלוהיו', kinuy: 'אלוקיו', havayaOnly: false },
+            { letters: 'אלהותו', kinuy: 'אלקותו', havayaOnly: false },
+            { letters: 'אלוהותו', kinuy: 'אלוקותו', havayaOnly: false }
         ];
 
-        function buildHolyNameLetterPattern(word) {
-            // תבנית שמאפשרת ניקוד/טעמים אופציונליים בין כל אות ואות של המילה - כדי לתפוס גם טקסט מנוקד
-            return Array.from(word).map(ch => ch + HOLY_DIACRITIC_RE_SRC).join('');
+        function buildHolyNameLetterPattern(word, allowInnerHyphen) {
+            // תבנית שמאפשרת ניקוד/טעמים אופציונליים בין כל אות ואות של המילה - כדי לתפוס גם טקסט מנוקד.
+            // allowInnerHyphen: מאפשר גם מקף (רגיל או עברי) אופציונלי בין אותיות השם - למקרה שהמקור כבר
+            // כתוב בחלוקה להברות (כגון "ש-די", "אֲדֹ-נָי")
+            const letters = Array.from(word);
+            return letters.map((ch, i) => ch + HOLY_DIACRITIC_RE_SRC +
+                ((allowInnerHyphen && i < letters.length - 1) ? '(?:[\\u05BE\\-])?' : '')).join('');
         }
 
         // בונה regex לשם קדושה בודד, כולל קבוצת "אות שימוש" אופציונלית (group 1) לפני קבוצת השם
         // עצמו (group 2) - כך שאפשר להשאיר את אות השימוש ללא שינוי, ולהחליף/לפרק רק את השם עצמו
-        function buildSingleHolyNameRegex(nameDef) {
-            const corePattern = buildHolyNameLetterPattern(nameDef.letters);
+        function buildSingleHolyNameRegex(nameDef, allowInnerHyphen) {
+            const corePattern = buildHolyNameLetterPattern(nameDef.letters, Boolean(allowInnerHyphen));
             return new RegExp(
                 NOT_PRECEDED_BY_LETTER_SRC +
                 '(' + PREFIX_GROUP_RE_SRC + ')' +
@@ -6275,11 +6734,42 @@ function updateHeaderSetting(val) {
             );
         }
 
+        // "היה" / "והיה" (עם או בלי ניקוד) הן מילות חול (הפועל "להיות") ולא שם קדושה, למרות שהן נראות
+        // כאות שימוש (ה / וה) + "יה". מוחרגות מההסתרה הכללית כשהן עומדות כמילה שלמה: לפניהן ואחריהן
+        // רווח / תחילת-סוף טקסט / סימן פיסוק (ולא מקף - מקף צמוד לא נחשב מילה עצמאית).
+        const HAYA_BOUNDARY_RE = /[\s.,;:!?()\[\]{}"'\u05F3\u05F4\u2026]/;
+        function isPlainHayaWord(prefix, matchedText, fullString, offset) {
+            const strippedPrefix = (prefix || '').replace(/[\u0591-\u05C7]/g, '');
+            if (strippedPrefix !== 'ה' && strippedPrefix !== 'וה') return false;
+            const before = offset > 0 ? fullString.charAt(offset - 1) : '';
+            const after = fullString.charAt(offset + matchedText.length);
+            const okBefore = before === '' || HAYA_BOUNDARY_RE.test(before);
+            const okAfter = after === '' || HAYA_BOUNDARY_RE.test(after);
+            return okBefore && okAfter;
+        }
+
+        // הצגה בכינוי עם שמירת הניקוד/הטעמים של המקור: כל אות של הכינוי מקבלת את הניקוד שהיה על האות
+        // המקבילה לה בשם המקורי (אֱלֹהִים -> אֱלֹקִים). כשאין בשם המקורי שום ניקוד, או כשאי אפשר ליישר
+        // את האותיות אחת-לאחת (כגון "ה'" במקום אדני), מוחזר הכינוי כפי שהוא, בדיוק כמו קודם.
+        function applyKinuyKeepingNikud(coreText, kinuyText, originalLetters) {
+            if (!/[\u0591-\u05C7]/.test(coreText)) return kinuyText;
+            if (!/^[\u05D0-\u05EA]+$/.test(kinuyText)) return kinuyText;
+            const groups = coreText.match(new RegExp(HEBREW_LETTER_RE_SRC + HOLY_DIACRITIC_RE_SRC, 'g'));
+            if (!groups) return kinuyText;
+            let target = kinuyText;
+            if (target.length !== groups.length && originalLetters) {
+                // כינוי עם אות נוספת (אלוקינו) - עם ניקוד משתמשים בהחלפת ה'->ק' אות-באות (אֱלֹקֵינוּ)
+                target = originalLetters.replace(/ה/g, 'ק');
+            }
+            if (target.length !== groups.length) return kinuyText;
+            return groups.map((g, i) => target.charAt(i) + g.slice(1)).join('');
+        }
+
         // המרת טקסט השם הקדוש עצמו (ללא אות השימוש, אם הייתה) לתצוגה המבוקשת - מקף (פירוק אות-אות,
         // כל אחת עם הניקוד/הטעמים הצמודים לה) או כינוי קבוע (kinuyText)
-        function transformHolyCoreText(coreText, displayMode, kinuyText) {
+        function transformHolyCoreText(coreText, displayMode, kinuyText, originalLetters) {
             if (displayMode === 'kinuy') {
-                return kinuyText;
+                return applyKinuyKeepingNikud(coreText, kinuyText, originalLetters);
             }
             const letterGroups = coreText.match(new RegExp(HEBREW_LETTER_RE_SRC + HOLY_DIACRITIC_RE_SRC, 'g'));
             return letterGroups ? letterGroups.join('-') : coreText;
@@ -6409,6 +6899,18 @@ function updateHeaderSetting(val) {
                 ? HOLY_NAMES.filter(n => currentSettings.holyNamesFilter === 'all' || n.havayaOnly)
                     .map(n => ({ regex: buildSingleHolyNameRegex(n), kinuy: n.kinuy, letters: n.letters }))
                 : [];
+            // שמות שבמקור עשויים להיות כתובים כבר עם מקף בין ההברות ("ש-די", "אֲדֹ-נָי") - מאחדים אותם
+            // לפני כל שאר העיבוד (ובפרט לפני החלפת המקף ברווח בהסתרת פיסוק), כדי שיזוהו ויוצגו כשם קדוש
+            const hyphenatedNameEntries = activeHolyNameEntries.length
+                ? HOLY_NAMES.filter(n => n.allowInnerHyphen && (currentSettings.holyNamesFilter === 'all' || n.havayaOnly))
+                    .map(n => ({ regex: buildSingleHolyNameRegex(n, true), letters: n.letters }))
+                : [];
+            // ספרים שכבר נכתבו במקור עם הכינוי "יקוק": בהצגה בכינוי, כשהמתג "שם הוי"ה יופיע כ-י"י" דולק,
+            // מזהים גם אותו והופכים ל-י"י (עם ניקוד: יְיָ). כל שאר הכינויים שכתובים בספר (אלקים וכו') ושם
+            // יקוק כשהמתג כבוי - נשארים בדיוק כפי שנכתבו, כולל הניקוד שלהם.
+            const sourceKinuyHavayaRegex = (holyNamesActive && currentSettings.holyNamesDisplay === 'kinuy' && currentSettings.holyNamesYY)
+                ? buildSingleHolyNameRegex({ letters: 'יקוק' })
+                : null;
             // "אל"/"אלי" עם ניקוד מדויק מתווספות רק תחת "כל שמות הקדושה" (לא בסינון "רק הוי\"ה המפורש")
             const elPreciseRegex = (holyNamesActive && currentSettings.holyNamesFilter === 'all') ? buildElRegex() : null;
             const eliPreciseRegex = (holyNamesActive && currentSettings.holyNamesFilter === 'all') ? buildEliRegex() : null;
@@ -6418,6 +6920,18 @@ function updateHeaderSetting(val) {
             textNodes.forEach(node => {
                 let t = node.textContent;
                 if (!t) return;
+
+                hyphenatedNameEntries.forEach(entry => {
+                    entry.regex.lastIndex = 0;
+                    t = t.replace(entry.regex, (fullMatch, prefix, core) => {
+                        if (!/[\u05BE\-]/.test(core)) return fullMatch;
+                        const cleanCore = core.replace(/[\u05BE\-]/g, '');
+                        if (entry.letters === 'אדני' && !textHasDiacriticAfterLetter(cleanCore, 'נ', '\u05B8')) {
+                            return fullMatch;
+                        }
+                        return (prefix || '') + cleanCore;
+                    });
+                });
 
                 if (currentSettings.hidePunctuation) {
                     // מקף -> מוחלף ברווח (ולא נמחק) כדי שהמילים משני צדדיו לא ידבקו זו לזו
@@ -6441,7 +6955,11 @@ function updateHeaderSetting(val) {
                 // לא היה מזוהה כלל כאשר המשתמש גם מבקש להסתיר את הניקוד.
                 activeHolyNameEntries.forEach(entry => {
                     entry.regex.lastIndex = 0;
-                    t = t.replace(entry.regex, (fullMatch, prefix, core) => {
+                    t = t.replace(entry.regex, (fullMatch, prefix, core, offset, wholeString) => {
+                        // "היה"/"והיה" - פועל רגיל, לא שם קדושה (ראו isPlainHayaWord)
+                        if (entry.letters === 'יה' && isPlainHayaWord(prefix, fullMatch, wholeString, offset)) {
+                            return fullMatch;
+                        }
                         // "אדני" מזוהה כשם קדושה רק כשהניקוד תחת האות נ' הוא קמץ (ההגייה הקדושה) -
                         // ניקוד אחר תחת ה-נ' (או העדר ניקוד) הוא לשון חול ("אדני המשכן",
                         // "אדני האדונים" וכדומה) ולכן אינו מוסתר/מוחלף כלל.
@@ -6454,20 +6972,34 @@ function updateHeaderSetting(val) {
                         if (entry.letters === 'יה' && textHasDiacriticAfterLetter(prefix, 'ל', '\u05B5')) {
                             return fullMatch;
                         }
-                        return (prefix || '') + transformHolyCoreText(core, currentSettings.holyNamesDisplay, entry.kinuy);
+                        // שם הוי"ה המפורש בהסתרת כינוי + המתג "שם הוי"ה יופיע כ-י"י": "יי" (עם ניקוד:
+                        // שווא תחת הי' הראשונה וקמץ תחת השנייה). במצב מקף - ללא שינוי.
+                        if (entry.letters === 'יהוה' && currentSettings.holyNamesDisplay === 'kinuy' && currentSettings.holyNamesYY) {
+                            const hasNikud = /[\u05B0-\u05BD\u05BF\u05C1\u05C2\u05C4\u05C5\u05C7]/.test(core);
+                            return (prefix || '') + (hasNikud ? 'י\u05B0י\u05B8' : 'יי');
+                        }
+                        return (prefix || '') + transformHolyCoreText(core, currentSettings.holyNamesDisplay, entry.kinuy, entry.letters);
                     });
                 });
+
+                if (sourceKinuyHavayaRegex) {
+                    sourceKinuyHavayaRegex.lastIndex = 0;
+                    t = t.replace(sourceKinuyHavayaRegex, (fullMatch, prefix, core) => {
+                        const hasNikud = /[\u05B0-\u05BD\u05BF\u05C1\u05C2\u05C4\u05C5\u05C7]/.test(core);
+                        return (prefix || '') + (hasNikud ? 'י\u05B0י\u05B8' : 'יי');
+                    });
+                }
 
                 if (elPreciseRegex) {
                     elPreciseRegex.lastIndex = 0;
                     t = t.replace(elPreciseRegex, (fullMatch, prefix, core) => {
-                        return (prefix || '') + transformHolyCoreText(core, currentSettings.holyNamesDisplay, 'קל');
+                        return (prefix || '') + transformHolyCoreText(core, currentSettings.holyNamesDisplay, 'קל', 'אל');
                     });
                 }
                 if (eliPreciseRegex) {
                     eliPreciseRegex.lastIndex = 0;
                     t = t.replace(eliPreciseRegex, (fullMatch, prefix, core) => {
-                        return (prefix || '') + transformHolyCoreText(core, currentSettings.holyNamesDisplay, 'קלי');
+                        return (prefix || '') + transformHolyCoreText(core, currentSettings.holyNamesDisplay, 'קלי', 'אלי');
                     });
                 }
                 if (elAggressiveRegex) {
@@ -6480,7 +7012,7 @@ function updateHeaderSetting(val) {
                         if (/[\u05B6\u05B7]/.test(alefDiacritics)) {
                             return fullMatch;
                         }
-                        return (prefix || '') + transformHolyCoreText(core, currentSettings.holyNamesDisplay, 'קל');
+                        return (prefix || '') + transformHolyCoreText(core, currentSettings.holyNamesDisplay, 'קל', 'אל');
                     });
                 }
 
@@ -6634,6 +7166,10 @@ function preparePageWithHeader(container, pageNum, bookTitle, runningHeading) {
             if (fsVal) fsVal.innerText = val + 'pt';
 
             scheduleFontUpdate();
+        }
+
+        function updateNewTabSearchFocusSetting(val) {
+            currentSettings.newTabSearchFocus = (val === 'library') ? 'library' : 'old';
         }
 
         function resetToDefaults() {
@@ -7186,7 +7722,7 @@ function preparePageWithHeader(container, pageNum, bookTitle, runningHeading) {
             // מרווח קבוע בין העמודים (column-gap, ראו הכלל "body.two-column-scroll-active
             // #preview-area") שאינו מוגדל ע"י הזום, ולכן מחוסר מהרוחב הזמין לפני החלוקה.
             const isTwoColumnScroll = currentSettings.twoColumnScroll && !currentSettings.isBookView;
-            const TWO_COLUMN_SCROLL_GAP_PX = 30;
+            const TWO_COLUMN_SCROLL_GAP_PX = 8; // חייב להתאים ל-column-gap של body.two-column-scroll-active #preview-area
             const widthBasedScale = isTwoColumnScroll
                 ? (availWidth - TWO_COLUMN_SCROLL_GAP_PX) / (pageWidthPx * 2)
                 : availWidth / pageWidthPx;
@@ -8177,6 +8713,10 @@ const previewArea = document.getElementById('preview-area');
         });
 
         async function openNewBookTab() {
+            // טאב חדש - הספרייה נפתחת מחדש במסך הראשי של התיקיות (לא במקום שבו היא הייתה בטאב הקודם)
+            libraryNavPath = '/';
+            const librarySearchEl = document.getElementById('library-search');
+            if (librarySearchEl) librarySearchEl.value = '';
             // יצירת טאב "ספר חדש" רגיל במערך
             const newTabIndex = tabs.length;
             tabs.push({ 
@@ -8198,10 +8738,396 @@ const previewArea = document.getElementById('preview-area');
             await loadNewBookList();
         }
 
+        /* ==========================================================================================
+           ספריית אוצריא במסך הפתיחה: עץ הספרייה (library.getTree) כרשת כרטיסים - תיקייה נכנסת לתיקייה
+           הבאה, ספר נפתח בטאב. סרגל עליון: תיקייה אחורה / דף הבית / רענון + איתור ספר או מחבר
+           (חיפוש רקורסיבי בתיקייה הנוכחית). בנתיב בראש הרשת לוחצים על תיקייה קודמת כדי לחזור אליה.
+           ========================================================================================== */
+        let libraryTreeRoot = null;        // עץ הספרייה אחרי סינון (רק ספרים שהתוסף יודע לפתוח) ומיון
+        let libraryTreePromise = null;
+        let libraryTreeFailed = false;
+        let libraryNavPath = '/';           // התיקייה הנוכחית (נשמר גם כשמסך הפתיחה נבנה מחדש)
+        let librarySidePaneHidden = false;
+        let libraryQueryTimer = null;
+        let libraryRenderToken = 0;
+
+        const LIBRARY_TOP_CATEGORIES = [
+            'תנ"ך', 'מדרש', 'משנה', 'תלמוד בבלי', 'תלמוד ירושלמי', 'תוספתא',
+            'הלכה', 'שו"ת', 'קבלה', 'סדר התפילה', 'מחשבת ישראל', 'חסידות',
+            'ספרי מוסר', 'מילונים וספרי יעץ', 'לימוד יומי', 'ספרות עזר', 'בית שני'
+        ];
+        function libraryItemOrder(item) { return Number.isInteger(item.order) ? item.order : 999; }
+        function libraryTopCategoryOrder(category) {
+            const title = (category.title || '').replace(/\u05f4/g, '"').replace(/\u05f3/g, "'");
+            const index = LIBRARY_TOP_CATEGORIES.indexOf(title);
+            return index >= 0 ? index : LIBRARY_TOP_CATEGORIES.length + libraryItemOrder(category);
+        }
+        // אותו סדר כמו במסך הספרייה של אוצריא: סדר קבוע לקטגוריות הראשיות, ושאר הקטגוריות/הספרים לפי order
+        function sortLibraryTreeNode(node, isRoot) {
+            const categoryOrder = isRoot ? libraryTopCategoryOrder : (category => {
+                const order = libraryItemOrder(category);
+                return order >= 0 ? order : 1000 + Math.abs(order);
+            });
+            return Object.assign({}, node, {
+                categories: (node.categories || []).map(c => sortLibraryTreeNode(c, false))
+                    .sort((a, b) => categoryOrder(a) - categoryOrder(b)),
+                books: (node.books || []).slice().sort((a, b) => libraryItemOrder(a) - libraryItemOrder(b))
+            });
+        }
+        // התוסף יודע לפתוח ספרי טקסט וספרי Word (ראו isFetchableLibraryItem) - שאר הסוגים (PDF וכו') מוסתרים,
+        // וקטגוריות שנשארו ריקות מוסתרות איתם
+        function isOpenableLibraryBook(book) {
+            if (!book || (!book.bookId && !book.title)) return false;
+            const type = (book.type || '').toString().toLowerCase();
+            if (type && type !== 'text' && type !== 'book' && type !== 'docx' && type !== 'doc') return false;
+            return !book.isPdf;
+        }
+        function filterLibraryTreeNode(node) {
+            const categories = (node.categories || []).map(filterLibraryTreeNode)
+                .filter(c => c.books.length || c.categories.length);
+            return Object.assign({}, node, { categories, books: (node.books || []).filter(isOpenableLibraryBook) });
+        }
+        function ensureLibraryTree(force) {
+            if (!force && libraryTreeRoot) return Promise.resolve(libraryTreeRoot);
+            if (libraryTreePromise) return libraryTreePromise;
+            libraryTreePromise = (async () => {
+                try {
+                    const { data } = await Otzaria.call('library.getTree', { includeBooks: true });
+                    if (!data) throw new Error('empty tree');
+                    libraryTreeRoot = sortLibraryTreeNode(filterLibraryTreeNode(data), true);
+                    libraryTreeFailed = false;
+                } catch (err) {
+                    console.error('library.getTree', err);
+                    libraryTreeFailed = !libraryTreeRoot;
+                } finally {
+                    libraryTreePromise = null;
+                }
+                return libraryTreeRoot;
+            })();
+            return libraryTreePromise;
+        }
+
+        // --- התאמת חיפוש: אותה התאמה כמו באוצריא (בלי ניקוד/פיסוק, עם סבילות לשגיאות כתיב קלות) ---
+        function libSearchWords(value) {
+            const words = []; let chunk = '', started = false;
+            const flush = () => { if (started) words.push(chunk); chunk = ''; started = false; };
+            for (let i = 0; i < value.length; i++) {
+                const c = value.charCodeAt(i);
+                if (c >= 0x0591 && c <= 0x05c7) { if (c === 0x05be || c === 0x05c0) flush(); continue; }
+                if (c === 0x22 || c === 0x27 || c === 0x05f3 || c === 0x05f4) continue;
+                if ((c >= 0x61 && c <= 0x7a) || (c >= 0x41 && c <= 0x5a) || (c >= 0x30 && c <= 0x39) || (c >= 0x0590 && c <= 0x05ff)) {
+                    started = true;
+                    chunk += String.fromCharCode(c >= 0x41 && c <= 0x5a ? c + 0x20 : c);
+                } else flush();
+            }
+            flush();
+            return words;
+        }
+        function libSearchWordMatches(query, word) {
+            if (word.includes(query)) return true;
+            if (query.length < 3) return false;
+            const collapse = t => t.replace(/\u05d5\u05d5/g, '\u05d5').replace(/\u05d9\u05d9/g, '\u05d9');
+            if (/(\u05d5\u05d5|\u05d9\u05d9)/.test(query + word) && collapse(word).includes(collapse(query))) return true;
+            const length = Math.max(query.length, word.length);
+            const allowed = length <= 4 ? 0 : Math.min(4, Math.ceil(length / 4) - 1);
+            if (!allowed || Math.abs(query.length - word.length) > allowed) return false;
+            let previous2 = new Uint32Array(word.length + 1);
+            let previous = Uint32Array.from({ length: word.length + 1 }, (_, i) => i);
+            let row = new Uint32Array(word.length + 1);
+            let previousMin = 0;
+            for (let i = 1; i <= query.length; i++) {
+                row[0] = i; let rowMin = i;
+                for (let j = 1; j <= word.length; j++) {
+                    const cost = query[i - 1] === word[j - 1] ? 0 : 1;
+                    let best = Math.min(previous[j] + 1, row[j - 1] + 1, previous[j - 1] + cost);
+                    if (i > 1 && j > 1 && query[i - 1] === word[j - 2] && query[i - 2] === word[j - 1]) best = Math.min(best, previous2[j - 2] + cost);
+                    row[j] = best; rowMin = Math.min(rowMin, best);
+                }
+                if (rowMin > allowed && previousMin > allowed) return false;
+                const recycled = previous2; previous2 = previous; previous = row; row = recycled; previousMin = rowMin;
+            }
+            return previous[word.length] <= allowed;
+        }
+        function libCreateMatcher(query) {
+            const terms = libSearchWords(query);
+            if (!terms.length) return () => true;
+            const cache = new Map();
+            return text => {
+                const words = libSearchWords(text);
+                return terms.every(term => words.some(word => {
+                    const key = term + '\0' + word;
+                    if (!cache.has(key)) cache.set(key, libSearchWordMatches(term, word));
+                    return cache.get(key);
+                }));
+            };
+        }
+
+        function libraryChain(node, path, chain) {
+            const next = (chain || []).concat([node]);
+            if (node.path === path || (node === libraryTreeRoot && path === '/')) return next;
+            for (const child of (node.categories || [])) {
+                const found = libraryChain(child, path, next);
+                if (found) return found;
+            }
+            return null;
+        }
+        function libraryCountInside(node) {
+            let books = (node.books || []).length, folders = (node.categories || []).length;
+            (node.categories || []).forEach(c => { const r = libraryCountInside(c); books += r.books; folders += r.folders; });
+            return { books, folders };
+        }
+
+        function libraryNavigate(path) {
+            libraryNavPath = path || '/';
+            const input = document.getElementById('library-search');
+            if (input) input.value = '';
+            renderLibraryScreen();
+            const scroller = document.getElementById('library-grid-scroll');
+            if (scroller) scroller.scrollTop = 0;
+        }
+        function libraryGoHome() { libraryNavigate('/'); }
+        function libraryGoUp() {
+            if (!libraryTreeRoot) return;
+            const chain = libraryChain(libraryTreeRoot, libraryNavPath);
+            if (!chain || chain.length < 2) return;
+            libraryNavigate(chain[chain.length - 2].path || '/');
+        }
+        function toggleLibrarySidePane() {
+            librarySidePaneHidden = !librarySidePaneHidden;
+            const layout = document.getElementById('new-book-tab-content');
+            if (layout) layout.classList.toggle('library-side-hidden', librarySidePaneHidden);
+        }
+        function openLibraryBook(book) {
+            const uid = book.bookUid || (book.id != null ? 'id:' + book.id : undefined);
+            setBookSelection(book.bookId || book.title, book.title || book.bookId, undefined, uid);
+        }
+
+        function handleLibrarySearchInput() {
+            clearTimeout(libraryQueryTimer);
+            libraryQueryTimer = setTimeout(() => {
+                renderLibraryScreen();
+                const scroller = document.getElementById('library-grid-scroll');
+                if (scroller) scroller.scrollTop = 0;
+            }, 250);
+        }
+        function handleLibrarySearchKeydown(e) {
+            if (e.key === 'ArrowDown' || (e.key === 'Tab' && !e.shiftKey)) {
+                const first = document.querySelector('#library-grid .library-card');
+                if (first) { e.preventDefault(); first.focus(); }
+            }
+        }
+
+        function libraryIconSvg(kind) {
+            if (kind === 'folder') return '<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3.5 7.5a2 2 0 0 1 2-2h4l2 2h7a2 2 0 0 1 2 2v7.5a2 2 0 0 1-2 2h-13a2 2 0 0 1-2-2z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>';
+            if (kind === 'book') return '<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 4.5h10.5a1.5 1.5 0 0 1 1.5 1.5v12.5H7.5A1.5 1.5 0 0 0 6 20zM6 4.5A1.5 1.5 0 0 0 4.5 6v12.5A1.5 1.5 0 0 0 6 20" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>';
+            if (kind === 'info') return '<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="8.25" stroke="currentColor" stroke-width="1.5"/><path d="M12 11v5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><circle cx="12" cy="8" r="1" fill="currentColor"/></svg>';
+            if (kind === 'home') return '<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4.5 10.6 12 4l7.5 6.6V19a1 1 0 0 1-1 1H15v-5.5H9V20H5.5a1 1 0 0 1-1-1z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>';
+            return '<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+        }
+
+        function makeLibraryCard(entry, isFolder) {
+            const card = document.createElement('div');
+            card.className = 'library-card';
+            card.tabIndex = 0;
+            card.setAttribute('role', 'button');
+            const label = entry.title || entry.bookId || '';
+            card.title = label;
+            const text = document.createElement('span'); text.className = 'library-card-text';
+            const title = document.createElement('span'); title.className = 'library-card-title'; title.textContent = label;
+            text.appendChild(title);
+            if (!isFolder && entry.author) {
+                const author = document.createElement('span'); author.className = 'library-card-author'; author.textContent = entry.author;
+                text.appendChild(author);
+            }
+            const actions = document.createElement('span'); actions.className = 'library-card-actions';
+            const infoBtn = document.createElement('button');
+            infoBtn.type = 'button'; infoBtn.className = 'library-card-btn library-card-info';
+            infoBtn.setAttribute('data-tooltip', 'פרטים'); infoBtn.setAttribute('aria-label', 'פרטים');
+            infoBtn.innerHTML = libraryIconSvg('info');
+            const openBtn = document.createElement('button');
+            openBtn.type = 'button'; openBtn.className = 'library-card-btn library-card-open';
+            const openLabel = isFolder ? 'פתח תיקייה' : 'פתח ספר';
+            openBtn.setAttribute('data-tooltip', openLabel); openBtn.setAttribute('aria-label', openLabel);
+            openBtn.innerHTML = libraryIconSvg(isFolder ? 'folder' : 'book');
+            actions.append(infoBtn, openBtn);
+            card.append(text, actions);
+
+            const activate = () => { if (isFolder) libraryNavigate(entry.path); else openLibraryBook(entry); };
+            card.addEventListener('click', activate);
+            card.addEventListener('keydown', e => {
+                if (e.target !== card) return;
+                if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); activate(); }
+                else if (e.key === 'ArrowUp') { e.preventDefault(); document.getElementById('library-search')?.focus(); }
+            });
+            infoBtn.addEventListener('click', e => { e.stopPropagation(); showLibraryInfo(entry, isFolder, infoBtn); });
+            openBtn.addEventListener('click', e => { e.stopPropagation(); activate(); });
+            return card;
+        }
+
+        function renderLibraryScreen() {
+            const grid = document.getElementById('library-grid');
+            const crumbs = document.getElementById('library-breadcrumbs');
+            const upBtn = document.getElementById('library-btn-up');
+            const searchInput = document.getElementById('library-search');
+            if (!grid) return;
+            const renderToken = ++libraryRenderToken;
+
+            if (!libraryTreeRoot) {
+                if (crumbs) crumbs.hidden = true;
+                if (upBtn) upBtn.classList.add('is-disabled');
+                grid.innerHTML = '';
+                const msg = document.createElement('div'); msg.className = 'library-empty';
+                if (libraryTreeFailed) {
+                    msg.textContent = 'שגיאה בטעינת הספרייה. ';
+                    const retry = document.createElement('button');
+                    retry.type = 'button'; retry.className = 'btn-secondary'; retry.textContent = 'נסה שוב';
+                    retry.onclick = () => { libraryTreeFailed = false; renderLibraryScreen(); ensureLibraryTree(true).then(() => { if (document.getElementById('library-grid')) renderLibraryScreen(); }); };
+                    msg.appendChild(retry);
+                } else {
+                    msg.textContent = 'טוען את ספריית אוצריא...';
+                }
+                grid.appendChild(msg);
+                return;
+            }
+
+            let chain = libraryChain(libraryTreeRoot, libraryNavPath);
+            if (!chain) { libraryNavPath = '/'; chain = [libraryTreeRoot]; }
+            const current = chain[chain.length - 1];
+            if (upBtn) upBtn.classList.toggle('is-disabled', chain.length < 2);
+
+            // נתיב: דף הבית > תיקיות... (התיקייה הנוכחית בצבע הראשי; לחיצה על קודמת חוזרת אליה)
+            if (crumbs) {
+                crumbs.innerHTML = '';
+                if (chain.length < 2) {
+                    crumbs.hidden = true;
+                } else {
+                    crumbs.hidden = false;
+                    chain.forEach((node, i) => {
+                        if (i > 0) { const sep = document.createElement('span'); sep.className = 'library-crumb-sep'; sep.innerHTML = libraryIconSvg('sep'); crumbs.appendChild(sep); }
+                        const b = document.createElement('button'); b.type = 'button'; b.className = 'library-crumb';
+                        if (i === 0) { b.innerHTML = libraryIconSvg('home'); b.setAttribute('aria-label', 'דף הבית של הספרייה'); }
+                        else b.textContent = node.title;
+                        if (i === chain.length - 1) { b.classList.add('current'); b.setAttribute('aria-current', 'page'); }
+                        else b.addEventListener('click', () => libraryNavigate(node.path || '/'));
+                        crumbs.appendChild(b);
+                    });
+                }
+            }
+
+            const rawQuery = searchInput ? searchInput.value : '';
+            const hasQuery = libSearchWords(rawQuery).length > 0;
+            if (searchInput) searchInput.placeholder = 'איתור ספר או מחבר ב' + (chain.length < 2 ? 'ספריית אוצריא' : current.title);
+
+            const matches = libCreateMatcher(rawQuery);
+            const entries = [];
+            // בחיפוש - כל התוצאות בתיקייה הנוכחית ובכל תתי-התיקיות שלה (תיקיות לפי שם, ספרים לפי שם ומחבר)
+            const collect = (node) => {
+                (node.categories || []).forEach(c => {
+                    if (!hasQuery || matches(c.title || '')) entries.push({ entry: c, isFolder: true });
+                    if (hasQuery) collect(c);
+                });
+                (node.books || []).forEach(b => {
+                    if (!hasQuery || matches((b.title || b.bookId || '') + ' ' + (b.author || ''))) entries.push({ entry: b, isFolder: false });
+                });
+            };
+            collect(current);
+
+            // ספרים מוגבלים (אין טקסט לתוספים) מוסתרים; הבדיקה הראשונה של ספרים חדשים אסינכרונית
+            const draw = () => {
+                if (renderToken !== libraryRenderToken || document.getElementById('library-grid') !== grid) return;
+                const frag = document.createDocumentFragment();
+                entries.forEach(e => { if (e.isFolder || !isBookRestricted(e.entry)) frag.appendChild(makeLibraryCard(e.entry, e.isFolder)); });
+                grid.innerHTML = '';
+                if (!frag.childNodes.length) {
+                    const msg = document.createElement('div'); msg.className = 'library-empty';
+                    msg.textContent = hasQuery ? 'לא נמצאו תוצאות' : 'אין ספרים בתיקייה זו';
+                    grid.appendChild(msg);
+                } else {
+                    grid.appendChild(frag);
+                }
+            };
+            const unchecked = entries.filter(e => !e.isFolder && !isBookRestrictionKnown(e.entry)).map(e => e.entry);
+            if (!unchecked.length) { draw(); return; }
+            if (!grid.querySelector('.library-card')) {
+                grid.innerHTML = '';
+                const msg = document.createElement('div'); msg.className = 'library-empty'; msg.textContent = 'טוען...';
+                grid.appendChild(msg);
+            }
+            loadBookRestrictions(unchecked).then(draw, draw);
+        }
+
+        // --- חלונית פרטים לכרטיס (כפתור ה-i) ---
+        function closeLibraryInfo() {
+            const pop = document.getElementById('library-info-pop');
+            if (pop) pop.remove();
+        }
+        document.addEventListener('mousedown', (e) => {
+            const pop = document.getElementById('library-info-pop');
+            if (pop && !pop.contains(e.target)) pop.remove();
+        }, true);
+        document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeLibraryInfo(); });
+
+        async function showLibraryInfo(entry, isFolder, anchor) {
+            closeLibraryInfo();
+            const pop = document.createElement('div');
+            pop.id = 'library-info-pop';
+            pop.className = 'library-info-pop no-print';
+            const title = document.createElement('div'); title.className = 'library-info-title';
+            title.textContent = entry.title || entry.bookId || '';
+            const body = document.createElement('div');
+            pop.append(title, body);
+            document.body.appendChild(pop);
+            const rect = anchor.getBoundingClientRect();
+            const popW = pop.offsetWidth;
+            pop.style.left = Math.max(8, Math.min(rect.left, window.innerWidth - popW - 8)) + 'px';
+            pop.style.top = Math.min(rect.bottom + 6, Math.max(8, window.innerHeight - 160)) + 'px';
+
+            const addRow = (label, value) => {
+                if (value === null || value === undefined || value === '' || (Array.isArray(value) && !value.length)) return;
+                const row = document.createElement('div'); row.className = 'library-info-row';
+                const b = document.createElement('b'); b.textContent = label + ': ';
+                row.append(b, document.createTextNode(Array.isArray(value) ? value.join(', ') : String(value)));
+                body.appendChild(row);
+            };
+
+            if (isFolder) {
+                const n = libraryCountInside(entry);
+                addRow('סוג', 'תיקייה');
+                addRow('ספרים', n.books);
+                addRow('תיקיות', n.folders);
+                return;
+            }
+            body.textContent = 'טוען...';
+            let details = null;
+            try {
+                const params = entry.bookUid ? { bookUid: entry.bookUid } : (entry.id != null ? { id: entry.id } : { bookId: entry.bookId });
+                const res = await Otzaria.call('library.getBookDetails', params);
+                details = res && res.data;
+            } catch (err) { details = null; }
+            if (!pop.isConnected) return;
+            body.textContent = '';
+            const d = details || {};
+            addRow('מחברים', (d.authors && d.authors.length) ? d.authors : entry.author);
+            addRow('דור', d.generation || d.era);
+            addRow('קטגוריה', d.categoryPath || d.categories);
+            addRow('נושאים', (d.topics && d.topics.length) ? d.topics : entry.topics);
+            addRow('מקום חיבור', d.compositionPlace);
+            addRow('שורות', d.lineCount);
+            addRow('תיאור', d.shortDescription);
+            if (!body.childNodes.length) body.textContent = 'אין פרטים זמינים על הספר.';
+        }
+
         async function loadNewBookList() {
             const previewArea = document.getElementById('preview-area');
             previewArea.innerHTML = `
-                <div class="new-book-tab-content" id="new-book-tab-content">
+                <div class="new-book-tab-content library-layout${librarySidePaneHidden ? ' library-side-hidden' : ''}" id="new-book-tab-content">
+                    <section class="library-main" id="library-main">
+                        <nav class="library-breadcrumbs" id="library-breadcrumbs" aria-label="מיקום בספרייה" hidden></nav>
+                        <div class="library-grid-scroll" id="library-grid-scroll">
+                            <div class="library-grid" id="library-grid"></div>
+                        </div>
+                    </section>
+                    <aside class="library-side-pane" id="library-side-pane"><div class="library-side-inner">
                     <div class="new-book-tab-header">
                         <h2>בחר ספר לפתיחה</h2>
                         <p>בחר ספר מהרשימה כדי לפתוח אותו בטאב חדש</p>
@@ -8220,21 +9146,36 @@ const previewArea = document.getElementById('preview-area');
                     <div class="new-book-dedication">
                         <div class="new-book-dedication-text">זכות הלימוד מוקדש בל"נ לעלוי נשמתו הטהורה של הבה"ח מאיר בן יבדלחט"א אברהם הראל שאער זצ"ל</div>
                     </div>
+                    </div></aside>
                 </div>
             `;
 
             // מיקוד מיידי בשורת החיפוש - גם בטאב הראשוני וגם בכל טאב "+" חדש
-            document.getElementById('new-book-search')?.focus();
+            // (הגדרות > כללי > "פוקוס אוטומטי במסך הפתיחה": ברירת מחדל - הרשימה הישנה; לחלופין - הספרייה החדשה)
+            if (currentSettings.newTabSearchFocus === 'library') {
+                const oldSearchEl = document.getElementById('new-book-search');
+                if (oldSearchEl) oldSearchEl.removeAttribute('autofocus');
+                document.getElementById('library-search')?.focus();
+            } else {
+                document.getElementById('new-book-search')?.focus();
+            }
+
+            // ספריית אוצריא (בצד ימין) - מוצגת מיד מהמטמון אם כבר נטענה, ואחרת אחרי הטעינה
+            renderLibraryScreen();
+            ensureLibraryTree().then(() => { if (document.getElementById('library-grid')) renderLibraryScreen(); });
 
             try {
                 const { data } = await Otzaria.call('reader.getCurrentState');
                 const grid = document.getElementById('new-book-grid');
                 if (!grid) return;
 
-                if (data && data.openTabs && data.openTabs.length > 0) {
+                const openBooks = (data && data.openTabs ? data.openTabs : []).filter(t => !isPluginOrToolTab(t));
+                if (openBooks.length > 0) {
+                    const readableBooks = await filterOutRestrictedBooks(openBooks.filter(isFetchableLibraryItem));
+                    if (!grid.isConnected) return;
                     grid.innerHTML = '';
-                    window._newBookList = data.openTabs;
-                    renderNewBookGrid(data.openTabs);
+                    window._newBookList = readableBooks;
+                    renderNewBookGrid(readableBooks);
                 } else {
                     grid.innerHTML = '<div class="new-book-loading">אין ספרים פתוחים באוצריא כרגע.</div>';
                 }
@@ -8245,10 +9186,13 @@ const previewArea = document.getElementById('preview-area');
         }
 
         async function refreshNewBookList() {
+            // רענון עץ הספרייה (בצד ימין) - לצד רענון רשימת הספרים הפתוחים שהייתה עד היום
+            ensureLibraryTree(true).then(() => { if (document.getElementById('library-grid')) renderLibraryScreen(); });
+            renderLibraryScreen();
             const grid = document.getElementById('new-book-grid');
             if (!grid) return;
             // אנימציית סיבוב על כפתור הריענון
-            const btn = document.querySelector('#new-book-toolbar .icon-btn');
+            const btn = document.getElementById('library-btn-refresh');
             if (btn) {
                 btn.style.transition = 'transform 0.5s ease';
                 btn.style.transform = 'rotate(360deg)';
@@ -8258,10 +9202,13 @@ const previewArea = document.getElementById('preview-area');
             try {
                 const { data } = await Otzaria.call('reader.getCurrentState');
                 if (!grid.isConnected) return;
-                if (data && data.openTabs && data.openTabs.length > 0) {
+                const openBooks = (data && data.openTabs ? data.openTabs : []).filter(t => !isPluginOrToolTab(t));
+                if (openBooks.length > 0) {
+                    const readableBooks = await filterOutRestrictedBooks(openBooks.filter(isFetchableLibraryItem));
+                    if (!grid.isConnected) return;
                     grid.innerHTML = '';
-                    window._newBookList = data.openTabs;
-                    renderNewBookGrid(data.openTabs);
+                    window._newBookList = readableBooks;
+                    renderNewBookGrid(readableBooks);
                     // שחזור חיפוש אם היה
                     const searchInput = document.getElementById('new-book-search');
                     if (searchInput && searchInput.value.trim()) handleNewBookSearchInput();
@@ -8297,6 +9244,69 @@ const previewArea = document.getElementById('preview-area');
             if (label.includes('מפרשים')) return false;
             if (label.includes('חיפוש')) return false;
             return true;
+        }
+
+        // כרטיסיות של כלים/תוספים (כולל התוסף הזה עצמו) אינן ספרים - מוחרגות מרשימת הספרים הפתוחים.
+        // לפי מבנה openTabs של אוצריא: toolId מלא לכרטיסייה שאינה ספר, ו-isSelf לכרטיסיית התוסף הקורא.
+        function isPluginOrToolTab(item) {
+            if (!item) return false;
+            if (item.isSelf) return true;
+            return item.toolId !== undefined && item.toolId !== null && item.toolId !== '';
+        }
+
+        // ספרים מוגבלים: בספרים שהמו"ל הגביל, אוצריא לא מוסרת את הטקסט לתוספים (protection.textAvailable
+        // = false) - אי אפשר להציג אותם, ולכן מסתירים אותם מכל רשימה/חיפוש. נבדק מראש באצוות
+        // (library.getBookProtections, עד 500 בקריאה) ונשמר במטמון. אם הבדיקה נכשלת (למשל בגרסת אוצריא
+        // ישנה שאין בה את ה-API) - לא מסתירים כלום, כמו קודם.
+        const bookRestrictionCache = new Map();   // מפתח זהות -> true אם הספר מוגבל (אין טקסט לתוספים)
+        let bookProtectionApiFailed = false;
+        function bookProtectionRef(item) {
+            if (!item) return null;
+            if (item.bookUid) return { bookUid: item.bookUid };
+            if (item.id !== undefined && item.id !== null && item.id !== '') return { id: item.id };
+            if (item.bookId) return { bookId: item.bookId };
+            return null;
+        }
+        function bookProtectionKey(item) {
+            const ref = bookProtectionRef(item);
+            return ref ? JSON.stringify(ref) : null;
+        }
+        function isBookRestrictionKnown(item) {
+            const key = bookProtectionKey(item);
+            return key === null || bookRestrictionCache.has(key) || bookProtectionApiFailed;
+        }
+        function isBookRestricted(item) {
+            const key = bookProtectionKey(item);
+            return key !== null && bookRestrictionCache.get(key) === true;
+        }
+        async function loadBookRestrictions(items) {
+            if (bookProtectionApiFailed) return;
+            const refsByKey = new Map();
+            (items || []).forEach(it => {
+                const key = bookProtectionKey(it);
+                if (key !== null && !bookRestrictionCache.has(key) && !refsByKey.has(key)) refsByKey.set(key, bookProtectionRef(it));
+            });
+            if (refsByKey.size === 0) return;
+            const keys = Array.from(refsByKey.keys());
+            const chunks = [];
+            for (let i = 0; i < keys.length; i += 500) chunks.push(keys.slice(i, i + 500));
+            await Promise.all(chunks.map(async (chunkKeys) => {
+                try {
+                    const { data } = await Otzaria.call('library.getBookProtections', { items: chunkKeys.map(k => refsByKey.get(k)) });
+                    if (!Array.isArray(data)) return;
+                    chunkKeys.forEach((k, i) => {
+                        const prot = data[i];
+                        bookRestrictionCache.set(k, Boolean(prot && prot.textAvailable === false));
+                    });
+                } catch (err) {
+                    bookProtectionApiFailed = true;
+                }
+            }));
+        }
+        async function filterOutRestrictedBooks(items) {
+            const list = Array.isArray(items) ? items : [];
+            await loadBookRestrictions(list);
+            return list.filter(it => !isBookRestricted(it));
         }
 
         function renderNewBookGrid(books) {
@@ -8345,7 +9355,9 @@ const previewArea = document.getElementById('preview-area');
 
             newBookSearchTimer = setTimeout(async () => {
                 try {
-                    const { data } = await Otzaria.call('library.findBooks', { query, limit: 100 });
+                    const { data: foundBooks } = await Otzaria.call('library.findBooks', { query, limit: 100 });
+                    // תוצאות שאי אפשר להציג (ספרים מוגבלים, PDF וכו') לא מוצגות בכלל
+                    const data = await filterOutRestrictedBooks((foundBooks || []).filter(isFetchableLibraryItem));
                     const stillCurrent = document.getElementById('new-book-search')?.value.trim() === query;
                     if (!stillCurrent) return;
                     if (data && data.length > 0) {
@@ -8399,18 +9411,32 @@ const previewArea = document.getElementById('preview-area');
         });
 
         function closeAllPopovers() {
-            document.getElementById('column-popover').classList.remove('open');
+            const colPopover = document.getElementById('column-popover');
+            if (colPopover) colPopover.classList.remove('open');
+            const colToggle = document.getElementById('column-toggle');
+            if (colToggle) colToggle.classList.remove('open');
+            const moreMenu = document.getElementById('more-menu');
+            if (moreMenu) moreMenu.classList.remove('open');
         }
 
+        // תפריט שלוש הנקודות (בקצה השמאלי של הסרגל): הדפסת מסמך + מספר הטורים
+        function toggleMoreMenu(e) {
+            e.stopPropagation();
+            const menu = document.getElementById('more-menu');
+            if (!menu) return;
+            const wasOpen = menu.classList.contains('open');
+            closeAllPopovers();
+            if (!wasOpen) menu.classList.add('open');
+        }
+
+        // פתיחה/סגירה של רשימת בחירת מספר הטורים בתוך התפריט (התפריט עצמו נשאר פתוח)
         function toggleColumnPopover(e) {
             e.stopPropagation();
             const popover = document.getElementById('column-popover');
-            if (popover.classList.contains('open')) {
-                popover.classList.remove('open');
-                return;
-            }
-            closeAllPopovers();
-            popover.classList.add('open');
+            const toggle = document.getElementById('column-toggle');
+            const willOpen = !popover.classList.contains('open');
+            popover.classList.toggle('open', willOpen);
+            if (toggle) toggle.classList.toggle('open', willOpen);
         }
 
         function selectColumn(value) {
@@ -8868,7 +9894,9 @@ const previewArea = document.getElementById('preview-area');
             { id: 'closeAllTabs', label: 'סגירת כל הטאבים', combo: { ctrl: true, shift: true, key: 'W' } },
             { id: 'closeTab', label: 'סגירת הטאב הנוכחי', combo: { ctrl: true, key: 'W' } },
             { id: 'zoomIn', label: 'הגדלת זום', combo: { ctrl: true, key: '=' } },
-            { id: 'zoomOut', label: 'הקטנת זום', combo: { ctrl: true, key: '-' } }
+            { id: 'zoomOut', label: 'הקטנת זום', combo: { ctrl: true, key: '-' } },
+            { id: 'prevSegment', label: 'מעבר לקטע הקודם (סימון מפרשים)', combo: { ctrl: true, key: 'ArrowRight' } },
+            { id: 'nextSegment', label: 'מעבר לקטע הבא (סימון מפרשים)', combo: { ctrl: true, key: 'ArrowLeft' } }
         ];
 
         const SHORTCUT_KEY_LABELS = {
@@ -9227,6 +10255,7 @@ let searchDebounceTimer = null;
             function renderNode(node, container) {
                 const wrapper = document.createElement('div');
                 wrapper.className = 'toc-item-wrapper';
+                wrapper.dataset.tocKey = 'l' + node.lineIndex;
                 if (node.level === 1) wrapper.classList.add('expanded');
 
                 const el = document.createElement('div');
@@ -9272,7 +10301,88 @@ let searchDebounceTimer = null;
             root.children.forEach(node => renderNode(node, tocList));
         }
 
-function buildTOC() {
+// עטיפה סביב buildTOCCore: שומרת את מצב הפתיחה/כיווץ של הכותרות ואת מיקום הגלילה של הרשימה בין
+        // בניות חוזרות של אותו טאב - כך שרשימת הכותרות יכולה להתעדכן תוך כדי טעינת הספר (ראו
+        // updateTOCProgressive) בלי שהפריטים שהמשתמש פתח ייסגרו או שהרשימה תקפוץ לראש.
+        function buildTOC() {
+            const tocList = document.getElementById('toc-list');
+            const tab = tabs[activeTabIndex];
+            let prevState = null;
+            let prevScroll = 0;
+            if (tocList && tab && tocList._builtForTab === tab) {
+                prevState = new Map();
+                tocList.querySelectorAll('.toc-item-wrapper[data-toc-key]').forEach(w => {
+                    prevState.set(w.dataset.tocKey, w.classList.contains('expanded'));
+                });
+                prevScroll = tocList.scrollTop;
+            }
+            buildTOCCore();
+            if (!tocList) return;
+            if (prevState) {
+                tocList.querySelectorAll('.toc-item-wrapper[data-toc-key]').forEach(w => {
+                    if (prevState.has(w.dataset.tocKey)) w.classList.toggle('expanded', prevState.get(w.dataset.tocKey));
+                });
+                tocList.scrollTop = prevScroll;
+                const filterInput = document.getElementById('toc-filter');
+                if (filterInput && filterInput.value) filterTOC();
+            }
+            tocList._builtForTab = tab || null;
+            if (tab) {
+                tab._tocLoadedKey = getTocLoadedKey(tab);
+                tab._tocLastBuild = performance.now();
+            }
+            if (typeof scheduleNavBarUpdate === 'function') scheduleNavBarUpdate();
+        }
+
+        // השורה (data-line-idx) הגדולה ביותר שכבר קיימת ב-DOM - העמודים נוספים לפי סדר הטקסט, ולכן זו
+        // השורה האחרונה המסומנת בעמוד האחרון שיש בו שורות מסומנות. -1 אם עדיין לא נטען כלום.
+        function getMaxLoadedLineIdx() {
+            const previewArea = document.getElementById('preview-area');
+            if (!previewArea) return -1;
+            const pages = previewArea.querySelectorAll('.print-page');
+            for (let p = pages.length - 1, scanned = 0; p >= 0 && scanned < 60; p--, scanned++) {
+                const marked = pages[p].querySelectorAll('[data-line-idx]');
+                if (marked.length) {
+                    const v = parseInt(marked[marked.length - 1].getAttribute('data-line-idx'), 10);
+                    if (!isNaN(v)) return v;
+                }
+            }
+            return -1;
+        }
+
+        // תוכן העניינים הרשמי של הספר, מצומצם לכותרות שהעמוד שלהן כבר נטען בפועל (עד שהעימוד מסתיים).
+        // אחרי סיום העימוד - כל הפריטים. כך הרשימה גדלה בהדרגה בדיוק כמו רשימת העמודים.
+        function getOfficialTocLoaded(tab) {
+            const items = (tab && Array.isArray(tab.officialToc)) ? tab.officialToc : [];
+            if (items.length === 0) return [];
+            if (tab.pagesRendered || tab._tocComplete) return items;
+            const maxLoaded = getMaxLoadedLineIdx();
+            if (maxLoaded < 0) return [];
+            return items.filter(it => it && typeof it.index === 'number' && it.index <= maxLoaded);
+        }
+
+        function hasOfficialToc(tab) {
+            return Boolean(tab && Array.isArray(tab.officialToc) && tab.officialToc.length > 0);
+        }
+
+        // מפתח קטן שמשתנה בכל פעם שמספר הכותרות שנטענו משתנה - לזיהוי הצורך בבנייה מחדש
+        function getTocLoadedKey(tab) {
+            if (hasOfficialToc(tab)) return 'o' + getOfficialTocLoaded(tab).length;
+            const previewArea = document.getElementById('preview-area');
+            return 'd' + (previewArea ? previewArea.querySelectorAll('h1, h2, h3, h4, h5, h6').length : 0);
+        }
+
+        // נקראת מלולאת העימוד אחרי כל באץ': בונה מחדש את עץ הכותרות רק אם נוספו כותרות חדשות (ולא יותר
+        // מפעם ב-400ms, כדי לא להכביד בספרים גדולים) - הבנייה הסופית נעשית בסיום העימוד.
+        function updateTOCProgressive() {
+            const tab = tabs[activeTabIndex];
+            if (!tab) return;
+            if (getTocLoadedKey(tab) === tab._tocLoadedKey) return;
+            if (performance.now() - (tab._tocLastBuild || 0) < 400) return;
+            buildTOC();
+        }
+
+function buildTOCCore() {
             const previewArea = document.getElementById('preview-area');
             const tocList = document.getElementById('toc-list');
             tocList.innerHTML = '';
@@ -9287,8 +10397,13 @@ function buildTOC() {
             // כותרות ה-HTML (הלוגיקה הקיימת, ללא שינוי) רק כשאין תוכן עניינים רשמי זמין (למשל
             // קובץ חיצוני, או ספר שמשיכת ה-TOC שלו נכשלה/החזירה רשימה ריקה).
             const activeTabForToc = tabs[activeTabIndex];
-            if (activeTabForToc && Array.isArray(activeTabForToc.officialToc) && activeTabForToc.officialToc.length > 0) {
-                buildTOCFromOfficialData(activeTabForToc.officialToc, tocList);
+            if (hasOfficialToc(activeTabForToc)) {
+                const loadedItems = getOfficialTocLoaded(activeTabForToc);
+                if (loadedItems.length === 0) {
+                    tocList.innerHTML = '<div style="padding: 20px; color: var(--color-outline); text-align: center;">טוען כותרות...</div>';
+                    return;
+                }
+                buildTOCFromOfficialData(loadedItems, tocList);
                 return;
             }
 
@@ -9324,6 +10439,7 @@ function buildTOC() {
             function renderTocNode(node, container) {
                 const wrapper = document.createElement('div');
                 wrapper.className = 'toc-item-wrapper';
+                wrapper.dataset.tocKey = 'h' + node.heading.id;
                 // כותרות רמה 1 פתוחות כברירת מחדל (מציגות את תתי-הכותרות שלהן מיד)
                 if (node.level === 1) wrapper.classList.add('expanded');
 
@@ -10087,7 +11203,11 @@ function searchInBook() {
                 // כתכונת HTML כדי לאפשר בהמשך לאתר את העמוד המדויק שמכיל שורה נתונה (ראו
                 // locatePageIndexForLineIndex).
                 if (trimmed) {
-                    wrapped.push(`<p data-line-idx="${contentLineIdx}">${trimmed}</p>`);
+                    // שורת כותרת (h1-h6): הדפדפן מוציא את הכותרת מתוך ה-<p> העוטף, ולכן היא לא נשאה את
+                    // data-line-idx ולא ניתן היה לסמן אותה - מוסיפים את התכונה גם לתגית הכותרת עצמה
+                    // (המבנה שנוצר ב-DOM נשאר זהה, רק עם התכונה על הכותרת).
+                    const lineHtml = trimmed.replace(/^<(h[1-6])(?=[\s>])/i, `<$1 data-line-idx="${contentLineIdx}"`);
+                    wrapped.push(`<p data-line-idx="${contentLineIdx}">${lineHtml}</p>`);
                     contentLineIdx++;
                 }
                 if (i % 5000 === 0 && performance.now() - formatBatchStart > 30) {
@@ -10313,6 +11433,7 @@ async function paginateContent(htmlContent, targetTabIndex) {
             const currentPaginationSession = targetTab.paginationToken;
 
             targetTab.pagesRendered = false;
+            targetTab._tocComplete = false;
             targetTab.isRendering = true;
             
             const previewArea = document.getElementById('preview-area');
@@ -10786,7 +11907,11 @@ async function paginateContent(htmlContent, targetTabIndex) {
                     // מצליחים לפתוח כותרת בזמן שהספר עדיין נטען.
                     if (batchIterations === 1) {
                         buildTOC();
-                    } else if (currentNavSubTab === 'pages') {
+                    } else {
+                        // רשימת הכותרות מתעדכנת אוטומטית עם הכותרות שנטענו (ראו updateTOCProgressive)
+                        updateTOCProgressive();
+                    }
+                    if (batchIterations !== 1 && currentNavSubTab === 'pages') {
                         // רשימת "עמודים" (בשונה מעץ הכותרות) היא רשימה שטוחה בלי מצב פתיחה/כיווץ
                         // לשמר, ולכן אפשר וכדאי לעדכן אותה בכל באץ' - אבל רק אם הלשונית הזו באמת
                         // מוצגת כרגע, בדיוק כמו בתיקון buildTOC. בלי זה, הרשימה נשארה "תקועה" על
@@ -10866,6 +11991,7 @@ async function paginateContent(htmlContent, targetTabIndex) {
                     }
 
                     if (isVisibleTab) {
+                        targetTab._tocComplete = true; // כל העמודים כבר ב-DOM - מציגים את כל הכותרות
                         buildTOC();
                         refreshSearchIfActive();
                     }
@@ -12798,6 +13924,21 @@ async function paginateContent(htmlContent, targetTabIndex) {
                 return;
             }
 
+            // מעבר בין קטעים (פסקאות) מסומנים לצורך חלונית המפרשים - ברירת מחדל Ctrl+→ קודם, Ctrl+← הבא.
+            // חייב להיבדק לפני בלוק החיצים הרגיל למטה (שמדפדף עמודים), אחרת Ctrl+חץ היה מדפדף עמוד.
+            if (activeTabIndex !== -1 && tabs[activeTabIndex] && !tabs[activeTabIndex].isNewBookTab) {
+                if (matchesShortcutAction(e, 'prevSegment')) {
+                    e.preventDefault();
+                    selectAdjacentParagraph(-1);
+                    return;
+                }
+                if (matchesShortcutAction(e, 'nextSegment')) {
+                    e.preventDefault();
+                    selectAdjacentParagraph(1);
+                    return;
+                }
+            }
+
             // חצי מקלדת ימינה/שמאלה - דפדוף בין עמודים (גם בתצוגת ספר וגם בתצוגת גלילה)
             // ימינה = לכיוון תחילת הספר (אחורה), שמאלה = לכיוון סוף הספר (קדימה) - בהתאם לכיווניות RTL
             if (activeTabIndex !== -1 && tabs[activeTabIndex] && !tabs[activeTabIndex].isNewBookTab) {
@@ -12965,7 +14106,249 @@ async function paginateContent(htmlContent, targetTabIndex) {
 
     // טווח שורות הטקסט הגולמי (data-line-idx, 0-based - אותה מערכת מספור בדיוק כמו ב-SDK) שמכוסה
     // על ידי העמוד/העמודים המוצגים כרגע יחד - null אם אין שום שורה מסומנת מוצגת בפועל.
+    // טווח השורות של הטקסט המסומן כרגע בעמודים (אם יש סימון) - null כשאין סימון בתוך אזור התצוגה.
+    // כשיש סימון, חלונית המפרשים/הקישורים/ההערות מציגה רק את מה שקשור לשורות המסומנות (ברמת שורה -
+    // כך המפרשים והקישורים מקושרים בספרייה), ולא לכל העמוד/העמודים המוצגים.
+    function getSelectedLineRange() {
+        const sel = window.getSelection ? window.getSelection() : null;
+        if (!sel || sel.rangeCount === 0 || sel.isCollapsed) return null;
+        const previewArea = document.getElementById('preview-area');
+        if (!previewArea) return null;
+        const range = sel.getRangeAt(0);
+        if (!previewArea.contains(range.commonAncestorContainer)) return null;
+
+        const pageOf = (node) => {
+            const el = node && (node.nodeType === 1 ? node : node.parentElement);
+            return el ? el.closest('.print-page') : null;
+        };
+        const allPages = Array.from(previewArea.querySelectorAll('.print-page'));
+        let from = allPages.indexOf(pageOf(range.startContainer));
+        let to = allPages.indexOf(pageOf(range.endContainer));
+        if (from === -1 && to === -1) {
+            // הסימון מתחיל/נגמר מחוץ לעמוד עצמו (למשל על המכל) - בודקים רק את העמודים שנוגעים בו
+            from = 0; to = allPages.length - 1;
+        } else {
+            if (from === -1) from = to;
+            if (to === -1) to = from;
+            if (from > to) { const t = from; from = to; to = t; }
+        }
+
+        let min = null, max = null;
+        for (let pi = from; pi <= to; pi++) {
+            const pageEl = allPages[pi];
+            if (!pageEl || !range.intersectsNode(pageEl)) continue;
+            pageEl.querySelectorAll('[data-line-idx]').forEach(el => {
+                if (!range.intersectsNode(el)) return;
+                const idx = parseInt(el.getAttribute('data-line-idx'), 10);
+                if (isNaN(idx)) return;
+                if (min === null || idx < min) min = idx;
+                if (max === null || idx > max) max = idx;
+            });
+        }
+        if (min === null) return null;
+        return { start: min, end: max };
+    }
+
+    // --- סימון פסקה בלחיצה אחת ---
+    // לחיצה (בלי גרירה) על פסקה מסמנת את כולה ומציגה את כל המפרשים/קישורים/הערות שלה.
+    // הסימון נשמר בנפרד לכל טאב (tab.clickedParagraphIdx), כך שמעבר בין טאבים לא משפיע עליו.
+    // סימון ידני של טקסט (גרירה) גובר על זה: הוא מבטל את סימון הפסקה בטאב הפעיל, ובזמן שיש
+    // סימון ידני getVisibleLineRange מחזירה רק את טווח הסימון הידני (ראו למטה).
+
+    // רשימה ממוינת של כל הפסקאות המסומנות בלחיצה בטאב (פסקה ראשית + תוספות שנבחרו עם Ctrl) - ריקה אם אין סימון
+    function getClickedParagraphIdxList(tab) {
+        if (!tab || typeof tab.clickedParagraphIdx !== 'number') return [];
+        const list = [tab.clickedParagraphIdx];
+        if (Array.isArray(tab.clickedParagraphExtra)) {
+            tab.clickedParagraphExtra.forEach(v => { if (typeof v === 'number' && !list.includes(v)) list.push(v); });
+        }
+        return list.sort((a, b) => a - b);
+    }
+
+    // מעדכנת את ההדגשה בעמודים המוצגים כעת בלבד, לפי הפסקה/הפסקאות שסומנו בטאב הפעיל (ריק = ללא הדגשה)
+    function applyClickedParagraphHighlight() {
+        const previewArea = document.getElementById('preview-area');
+        if (!previewArea) return;
+        const tab = (typeof getActiveCommentaryTab === 'function') ? getActiveCommentaryTab() : null;
+        const idxSet = new Set(getClickedParagraphIdxList(tab).map(String));
+        previewArea.querySelectorAll('.para-click-sel').forEach(el => {
+            if (!idxSet.has(el.getAttribute('data-line-idx'))) el.classList.remove('para-click-sel');
+        });
+        idxSet.forEach(idx => {
+            previewArea.querySelectorAll('.print-page [data-line-idx="' + idx + '"]')
+                .forEach(el => el.classList.add('para-click-sel'));
+        });
+    }
+
+    function clearClickedParagraph() {
+        const tab = (typeof getActiveCommentaryTab === 'function') ? getActiveCommentaryTab() : null;
+        if (tab) { tab.clickedParagraphIdx = null; tab.clickedParagraphExtra = []; }
+        applyClickedParagraphHighlight();
+    }
+
+    // טווח הפסקה/הפסקאות שסומנו בלחיצה בטאב הפעיל - רק אם לפחות אחת מהן מוצגת כרגע בעמודים הנראים.
+    // בסימון בודד: {start, end} כמו תמיד. בסימון מרובה: בנוסף lines = רשימת כל השורות המסומנות (ייתכן לא רציפות).
+    function getClickedParagraphRange() {
+        const tab = (typeof getActiveCommentaryTab === 'function') ? getActiveCommentaryTab() : null;
+        const list = getClickedParagraphIdxList(tab);
+        if (list.length === 0) return null;
+        const visiblePages = getCurrentVisiblePrintPages();
+        const stillShown = list.some(idx => {
+            const sel = '[data-line-idx="' + idx + '"]';
+            return visiblePages.some(pageEl => pageEl.querySelector(sel));
+        });
+        if (!stillShown) return null;
+        applyClickedParagraphHighlight();
+        if (list.length === 1) return { start: list[0], end: list[0] };
+        return { start: list[0], end: list[list.length - 1], lines: list };
+    }
+
+    // מפצלת טווח (שאולי כולל lines לא רציפות) לקבוצות רציפות, מריצה את הטוען על כל קבוצה וממזגת את התוצאות.
+    // בטווח רגיל (בלי lines) זו קריאה אחת בדיוק, כמו קודם.
+    function loadForRangeGroups(range, loader) {
+        let groups;
+        if (Array.isArray(range.lines) && range.lines.length > 1) {
+            groups = [];
+            range.lines.forEach(idx => {
+                const last = groups[groups.length - 1];
+                if (last && idx === last.end + 1) last.end = idx;
+                else groups.push({ start: idx, end: idx });
+            });
+        } else {
+            groups = [{ start: range.start, end: range.end }];
+        }
+        return Promise.all(groups.map(g => loader(g.start, g.end))).then(arrs => [].concat(...arrs));
+    }
+
+    // מפתח קאש של טווח (כולל lines בסימון מרובה, כדי ששינוי בסימון ירענן את החלונית)
+    function getRangeCacheKey(range) {
+        return range.start + '-' + range.end + (Array.isArray(range.lines) ? ':' + range.lines.join(',') : '');
+    }
+
+    // מעבר לקטע (פסקה) הקודם/הבא ביחס לסימון הנוכחי (Ctrl+חצים כברירת מחדל) - הפסקה החדשה מסומנת לבדה
+    // ומוצגים המפרשים שלה. אם אין סימון - מסמן את הפסקה הראשונה שמוצגת כרגע.
+    function selectAdjacentParagraph(delta) {
+        const tab = (typeof getActiveCommentaryTab === 'function') ? getActiveCommentaryTab() : null;
+        const previewArea = document.getElementById('preview-area');
+        if (!tab || !previewArea) return;
+
+        const allIdx = new Set();
+        previewArea.querySelectorAll('.print-page [data-line-idx]').forEach(el => {
+            const v = parseInt(el.getAttribute('data-line-idx'), 10);
+            if (!isNaN(v)) allIdx.add(v);
+        });
+        const sorted = Array.from(allIdx).sort((a, b) => a - b);
+        if (sorted.length === 0) return;
+
+        // נקודת המוצא: סימון ידני (גרירה) אם יש, אחרת סימון הפסקאות הנוכחי (אם הוא מוצג), אחרת אין
+        let from = null;
+        const manual = getSelectedLineRange();
+        if (manual) {
+            from = delta > 0 ? manual.end : manual.start;
+        } else {
+            const cr = getClickedParagraphRange();
+            if (cr) from = delta > 0 ? cr.end : cr.start;
+        }
+
+        let target;
+        if (from === null) {
+            let min = null;
+            getCurrentVisiblePrintPages().forEach(pageEl => {
+                pageEl.querySelectorAll('[data-line-idx]').forEach(el => {
+                    const v = parseInt(el.getAttribute('data-line-idx'), 10);
+                    if (!isNaN(v) && (min === null || v < min)) min = v;
+                });
+            });
+            if (min === null) return;
+            target = min;
+        } else if (delta > 0) {
+            target = sorted.find(v => v > from);
+        } else {
+            for (let i = sorted.length - 1; i >= 0; i--) { if (sorted[i] < from) { target = sorted[i]; break; } }
+        }
+        if (typeof target !== 'number') return; // אין קטע נוסף בכיוון הזה
+
+        // סימון ידני (גרירה) גובר על סימון פסקה - מבטלים אותו כדי שהמעבר ייכנס לתוקף
+        if (hasBookTextSelection()) {
+            try { window.getSelection().removeAllRanges(); } catch (err) { /* לא קריטי */ }
+        }
+        tab.clickedParagraphIdx = target;
+        tab.clickedParagraphExtra = [];
+        applyClickedParagraphHighlight();
+
+        // אם הקטע החדש לא מוצג כרגע - עוברים לעמוד שמכיל אותו (אותה לוגיקה כמו goToPageIndex)
+        const sel = '[data-line-idx="' + target + '"]';
+        if (!getCurrentVisiblePrintPages().some(pageEl => pageEl.querySelector(sel))) {
+            const pages = Array.from(previewArea.querySelectorAll('.print-page'));
+            const pageIndex = pages.findIndex(pageEl => pageEl.querySelector(sel));
+            if (pageIndex >= 0) {
+                isScrollingFromTOC = true;
+                if (currentSettings.isBookView) {
+                    currentLeaf = Math.floor(pageIndex / 2) + (pageIndex % 2);
+                    updateBookViewPages(true);
+                } else {
+                    scrollToPageInScrollView(pageIndex);
+                }
+                setTimeout(() => { isScrollingFromTOC = false; }, 1500);
+            }
+        }
+
+        if (tab.commentaryPanelOpen) refreshCommentaryPanel();
+    }
+
+    (function setupParagraphClickSelect() {
+        const previewArea = document.getElementById('preview-area');
+        if (!previewArea) return;
+        previewArea.addEventListener('click', (e) => {
+            if (e.button !== 0) return;
+            const sel = window.getSelection ? window.getSelection() : null;
+            if (sel && !sel.isCollapsed) return; // יש סימון ידני - הוא גובר
+            const t = e.target;
+            if (!t || !t.closest) return;
+            if (t.closest('a, button, input, textarea, select, [contenteditable="true"]')) return;
+            const p = t.closest('[data-line-idx]');
+            if (!p || !p.closest('.print-page')) return;
+            const idx = parseInt(p.getAttribute('data-line-idx'), 10);
+            if (isNaN(idx)) return;
+            const tab = (typeof getActiveCommentaryTab === 'function') ? getActiveCommentaryTab() : null;
+            if (!tab) return;
+            const markedList = getClickedParagraphIdxList(tab);
+            const isCtrl = e.ctrlKey || e.metaKey;
+            if (markedList.includes(idx) && isCtrl) {
+                // Ctrl+לחיצה על קטע שכבר מסומן - מסיר רק אותו מהסימון
+                const rest = markedList.filter(v => v !== idx);
+                if (rest.length === 0) {
+                    clearClickedParagraph();
+                } else {
+                    tab.clickedParagraphIdx = rest[0];
+                    tab.clickedParagraphExtra = rest.slice(1);
+                }
+            } else if (markedList.includes(idx) && markedList.length === 1) {
+                // לחיצה חוזרת על הקטע היחיד המסומן - מבטלת את הסימון
+                clearClickedParagraph();
+            } else if (isCtrl && typeof tab.clickedParagraphIdx === 'number') {
+                // Ctrl+לחיצה - מוסיף עוד קטע לסימון הקיים (בלי לבטל את הקודמים)
+                tab.clickedParagraphExtra = (Array.isArray(tab.clickedParagraphExtra) ? tab.clickedParagraphExtra : []).concat(idx);
+            } else {
+                // לחיצה רגילה - רק הקטע הזה, וכל שאר הסימונים מתבטלים
+                tab.clickedParagraphIdx = idx;
+                tab.clickedParagraphExtra = [];
+            }
+            applyClickedParagraphHighlight();
+            if (tab.commentaryPanelOpen) refreshCommentaryPanel();
+        });
+        // סימון ידני חדש מבטל את סימון הפסקה (כך שהמפרשים יוצגו רק על מה שסומן ידנית)
+        document.addEventListener('selectionchange', () => {
+            const tab = (typeof getActiveCommentaryTab === 'function') ? getActiveCommentaryTab() : null;
+            if (tab && typeof tab.clickedParagraphIdx === 'number' && hasBookTextSelection()) clearClickedParagraph();
+        });
+    })();
+
     function getVisibleLineRange() {
+        const selectedRange = getSelectedLineRange();
+        if (selectedRange) return selectedRange;
+        const clickedRange = getClickedParagraphRange();
+        if (clickedRange) return clickedRange;
         const visiblePages = getCurrentVisiblePrintPages();
         if (visiblePages.length === 0) return null;
         let min = null, max = null;
@@ -12980,6 +14363,38 @@ async function paginateContent(htmlContent, targetTabIndex) {
         if (min === null) return null;
         return { start: min, end: max };
     }
+
+    // סימון טקסט (או ביטולו) מרענן את חלונית המפרשים - עם דיבאונס, ועם הקאש לפי טווח של
+    // refreshCommentaryPanel כך שלא נשלחות בקשות מיותרות כשהטווח לא השתנה בפועל.
+    let commentarySelectionTimer = null;
+    document.addEventListener('selectionchange', () => {
+        const tab = (typeof getActiveCommentaryTab === 'function') ? getActiveCommentaryTab() : null;
+        if (!tab || !tab.commentaryPanelOpen) return;
+        clearTimeout(commentarySelectionTimer);
+        commentarySelectionTimer = setTimeout(() => refreshCommentaryPanel(), 250);
+    });
+
+    // לחיצה בתוך חלונית המפרשים/קישורים/הערות לא מבטלת את הסימון שבספר: דפדפן מבטל סימון קיים בכל
+    // לחיצת עכבר על טקסט/אזור אחר במסמך, ולכן כשיש סימון בעמודים מונעים את ברירת המחדל של ה-mousedown
+    // בתוך החלונית (הלחיצות עצמן - כפתורים, פתיחה/סגירה של מפרש וכו' - ממשיכות לעבוד כרגיל).
+    // הסימון מתבטל רק בלחיצה חדשה בתוך אזור העמודים. שדות קלט (חיפוש וכדומה) נשארים לחיצים כרגיל,
+    // וכשאין סימון בספר אפשר לסמן ולהעתיק טקסט מתוך החלונית כמו קודם.
+    function hasBookTextSelection() {
+        const sel = window.getSelection ? window.getSelection() : null;
+        if (!sel || sel.rangeCount === 0 || sel.isCollapsed) return false;
+        const previewArea = document.getElementById('preview-area');
+        return Boolean(previewArea && previewArea.contains(sel.getRangeAt(0).commonAncestorContainer));
+    }
+    (function protectBookSelectionFromCommentaryPanel() {
+        const panel = document.getElementById('commentary-panel');
+        if (!panel) return;
+        panel.addEventListener('mousedown', (e) => {
+            if (e.button !== 0) return;
+            if (e.target && e.target.closest && e.target.closest('input, textarea, select, [contenteditable="true"]')) return;
+            if (!hasBookTextSelection()) return;
+            e.preventDefault();
+        }, true);
+    })();
 
     // --- הצגה/הסתרה של חלונית המפרשים (כפתור בסרגל הכלים) ---
 
@@ -13010,6 +14425,7 @@ async function paginateContent(htmlContent, targetTabIndex) {
     // נקרא בכל מעבר טאב (switchTab) - מציג/מסתיר את החלונית לפי מצב הטאב החדש, ומרענן את
     // תוכנה אם היא פתוחה (בדיוק כמו שחזור מצב פאנל הניווט דרך isDrawerOpen למעלה בקובץ).
     function applyCommentaryPanelStateForActiveTab() {
+        applyClickedParagraphHighlight(); // סימון הפסקה של הטאב שנפתח (כל טאב זוכר את הסימון שלו)
         const panelEl = document.getElementById('commentary-panel');
         const btn = document.getElementById('btn-commentary-panel');
         if (!panelEl) return;
@@ -13554,7 +14970,7 @@ async function paginateContent(htmlContent, targetTabIndex) {
         }
 
         const activeKey = tab.activeCommentators.slice().sort().join('\u0001');
-        const rangeKey = range.start + '-' + range.end + '::' + activeKey;
+        const rangeKey = getRangeCacheKey(range) + '::' + activeKey;
         if (!force && tab.commentaryLastRangeKey === rangeKey) return; // כבר מוצג בדיוק זה
 
         if (tab.activeCommentators.length === 0) {
@@ -13569,7 +14985,7 @@ async function paginateContent(htmlContent, targetTabIndex) {
         tab.commentaryContentLoading = true;
         if (isVisible()) renderCommentaryBody(tab);
 
-        loadCommentaryEntriesForRange(tab, range.start, range.end).then(entries => {
+        loadForRangeGroups(range, (s, e) => loadCommentaryEntriesForRange(tab, s, e)).then(entries => {
             if (tab.commentaryReqToken !== myToken) return; // בקשה מיושנת (הוחלפה בבקשה חדשה) - התעלם
             tab.commentaryEntries = entries;
             tab.commentaryContentLoading = false;
@@ -13612,7 +15028,7 @@ async function paginateContent(htmlContent, targetTabIndex) {
             return;
         }
 
-        const rangeKey = range.start + '-' + range.end;
+        const rangeKey = getRangeCacheKey(range);
         if (!force && tab.linksLastRangeKey === rangeKey) return;
 
         tab.linksLastRangeKey = rangeKey;
@@ -13620,7 +15036,7 @@ async function paginateContent(htmlContent, targetTabIndex) {
         tab.linksContentLoading = true;
         renderCommentaryBody(tab);
 
-        loadNonCommentaryLinksForRange(tab, range.start, range.end).then(entries => {
+        loadForRangeGroups(range, (s, e) => loadNonCommentaryLinksForRange(tab, s, e)).then(entries => {
             if (tab.linksReqToken !== myToken) return;
             tab.linksEntries = entries;
             tab.linksContentLoading = false;
@@ -13690,7 +15106,8 @@ async function paginateContent(htmlContent, targetTabIndex) {
         const proceedWithFilter = () => {
             const range = getVisibleLineRange();
             tab.notesEntries = !range ? [] : (tab.notesFullList || [])
-                .filter(n => typeof n.lineNumber === 'number' && n.lineNumber >= range.start && n.lineNumber <= range.end)
+                .filter(n => typeof n.lineNumber === 'number' && n.lineNumber >= range.start && n.lineNumber <= range.end
+                    && (!Array.isArray(range.lines) || range.lines.includes(n.lineNumber)))
                 .sort((a, b) => a.lineNumber - b.lineNumber);
             renderCommentaryBody(tab);
         };
@@ -13718,6 +15135,447 @@ async function paginateContent(htmlContent, targetTabIndex) {
             if (getActiveCommentaryTab() === tab && tab.commentaryPanelOpen && tab.commentaryActiveSubTab === 'notes') renderCommentaryBody(tab);
         });
     }
+
+
+    /* ==========================================================================================
+       מונה עמודים (X/X) וכותרת ניווט ממורכזת בסרגל הכלים.
+       • מונה העמודים: המספר הכללי = מספר העמודים שנטענו עד כה; התיבה מציגה את העמוד הנוכחי
+         ומאפשרת להקליד מספר עמוד ולעבור אליו (Enter).
+       • כותרת הניווט: הכותרת הנוכחית מרמה 1 עד 5 (מתוך תוכן העניינים הרשמי, ובהיעדרו מכותרות
+         h1-h5 שב-DOM), ברוחב קבוע, עם לחצני מעבר לכותרת הקודמת/הבאה. בריחוף - הכותרת המלאה.
+       ========================================================================================== */
+    const NAV_HEADING_MIN_LEVEL = 1;
+    const NAV_HEADING_MAX_LEVEL = 5;
+    const NAV_CENTER_MAX_WIDTH = 440;
+    const NAV_CENTER_MIN_WIDTH = 150;
+
+    let navBarUpdateQueued = false;
+    let navHeadingCache = null;   // { tab, key, items }
+    let navHeadingLock = null;    // מונע "תקיעה" אחרי קפיצה לכותרת שלא ניתן ליישר בדיוק לראש התצוגה
+    let navLastKnown = null;      // { tab, key } - הכותרת הנוכחית האחרונה שזוהתה (כשהמיקום רגעית לא ניתן לחישוב)
+
+    // מפתח יציב לכותרת: רשימת הכותרות נבנית מחדש בכל פעם שנטענים עמודים חדשים (אובייקטים חדשים), ולכן
+    // לא ניתן להשוות לפי אובייקט - רק לפי מספר השורה (תוכן עניינים רשמי) או האלמנט (כותרות DOM).
+    function navItemKey(item) {
+        return item.lineIndex !== null ? ('l' + item.lineIndex) : item.el;
+    }
+    function navIndexOfKey(items, key) {
+        for (let i = 0; i < items.length; i++) if (navItemKey(items[i]) === key) return i;
+        return -1;
+    }
+
+    function scheduleNavBarUpdate() {
+        if (navBarUpdateQueued) return;
+        navBarUpdateQueued = true;
+        requestAnimationFrame(() => {
+            navBarUpdateQueued = false;
+            try { updateNavBar(); } catch (e) { console.error('updateNavBar', e); }
+        });
+    }
+
+    function getNavCurrentPageIndex(pages) {
+        if (!pages || pages.length === 0) return -1;
+        const raw = currentSettings.isBookView ? (currentLeaf * 2) : getScrollCurrentPage();
+        return Math.min(Math.max(raw, 0), pages.length - 1);
+    }
+
+    // רשימת הכותרות (רמות 1-5) שנטענו כרגע - לפי סדר המסמך
+    function getNavHeadingItems() {
+        const tab = tabs[activeTabIndex];
+        if (!tab || tab.isNewBookTab) return [];
+        const previewArea = document.getElementById('preview-area');
+
+        if (hasOfficialToc(tab)) {
+            const loaded = getOfficialTocLoaded(tab);
+            const key = 'o' + loaded.length;
+            if (navHeadingCache && navHeadingCache.tab === tab && navHeadingCache.key === key && navHeadingCache.src === tab.officialToc) {
+                return navHeadingCache.items;
+            }
+            const items = [];
+            loaded.forEach(it => {
+                const text = (it && it.text ? String(it.text) : '').trim();
+                if (!text || typeof it.index !== 'number') return;
+                const level = Math.max(1, parseInt(it.level, 10) || 1);
+                if (level < NAV_HEADING_MIN_LEVEL || level > NAV_HEADING_MAX_LEVEL) return;
+                items.push({ text, level, lineIndex: it.index, el: null });
+            });
+            navHeadingCache = { tab, key, items, src: tab.officialToc };
+            return items;
+        }
+
+        const headings = Array.from(previewArea.querySelectorAll('h1, h2, h3, h4, h5'));
+        const first = headings.length ? headings[0] : null;
+        const key = 'd' + headings.length;
+        if (navHeadingCache && navHeadingCache.tab === tab && navHeadingCache.key === key && navHeadingCache.first === first && !navHeadingCache.src) {
+            return navHeadingCache.items;
+        }
+        const items = [];
+        headings.forEach(h => {
+            const text = h.textContent.trim();
+            if (!text) return;
+            items.push({ text, level: parseInt(h.tagName.substring(1), 10), lineIndex: null, el: h });
+        });
+        navHeadingCache = { tab, key, items, first, src: null };
+        return items;
+    }
+
+    // השורה הראשונה (data-line-idx) שנראית בראש אזור התצוגה בגלילה רגילה
+    function getFirstVisibleLineIdx(pages, pageIdx) {
+        const previewArea = document.getElementById('preview-area');
+        const areaTop = previewArea.getBoundingClientRect().top;
+        const from = Math.max(0, pageIdx - 1);
+        const to = Math.min(pages.length - 1, pageIdx + 2);
+        for (let p = from; p <= to; p++) {
+            if (pages[p].getBoundingClientRect().bottom <= areaTop + 1) continue;
+            const marked = pages[p].querySelectorAll('[data-line-idx]');
+            for (let i = 0; i < marked.length; i++) {
+                if (marked[i].getBoundingClientRect().bottom > areaTop + 1) {
+                    const v = parseInt(marked[i].getAttribute('data-line-idx'), 10);
+                    if (!isNaN(v)) return v;
+                }
+            }
+        }
+        return null;
+    }
+
+    // מחזיר { idx, atHeading } - אינדקס הכותרת הנוכחית ברשימה (-1 אם אין) והאם התצוגה נמצאת בדיוק בראשה
+    function computeCurrentNavHeading(items) {
+        if (items.length === 0) return { idx: -1, atHeading: false };
+        const previewArea = document.getElementById('preview-area');
+        const pages = Array.from(previewArea.querySelectorAll('.print-page'));
+        const pageIdx = getNavCurrentPageIndex(pages);
+        const isBook = Boolean(currentSettings.isBookView);
+
+        if (navHeadingLock) {
+            const lockIdx = navIndexOfKey(items, navHeadingLock.key);
+            const stillThere = isBook
+                ? (navHeadingLock.isBook && navHeadingLock.pageIdx === pageIdx)
+                : (!navHeadingLock.isBook && Math.abs(previewArea.scrollTop - navHeadingLock.scrollTop) <= 3);
+            if (lockIdx >= 0 && stillThere) return { idx: lockIdx, atHeading: true };
+            navHeadingLock = null;
+        }
+
+        const tabNow = tabs[activeTabIndex];
+        const official = items[0].lineIndex !== null;
+        if (official) {
+            const line = isBook ? getCurrentDisplayedLineIndex() : getFirstVisibleLineIdx(pages, Math.max(pageIdx, 0));
+            if (typeof line !== 'number') {
+                // המיקום לא ניתן לחישוב ברגע זה (למשל באמצע טעינה/עימוד) - נשארים על הכותרת האחרונה שזוהתה
+                // במקום ליפול ל"אין כותרת", שגרם לכפתור "הבאה" לקפוץ לכותרת הראשונה של הספר
+                if (navLastKnown && navLastKnown.tab === tabNow) {
+                    const li = navIndexOfKey(items, navLastKnown.key);
+                    if (li >= 0) return { idx: li, atHeading: false };
+                }
+                return { idx: -1, atHeading: false };
+            }
+            let lo = 0, hi = items.length - 1, found = -1;
+            while (lo <= hi) {
+                const mid = (lo + hi) >> 1;
+                if (items[mid].lineIndex <= line) { found = mid; lo = mid + 1; } else { hi = mid - 1; }
+            }
+            if (found >= 0) navLastKnown = { tab: tabNow, key: navItemKey(items[found]) };
+            return { idx: found, atHeading: found >= 0 && items[found].lineIndex === line };
+        }
+
+        // כותרות DOM (בלי תוכן עניינים רשמי)
+        if (isBook) {
+            let found = -1;
+            for (let i = 0; i < items.length; i++) {
+                const pe = items[i].el.closest('.print-page');
+                const pi = pe ? pages.indexOf(pe) : -1;
+                if (pi !== -1 && pi <= pageIdx) found = i; else if (pi > pageIdx) break;
+            }
+            return { idx: found, atHeading: false };
+        }
+        const areaTop = previewArea.getBoundingClientRect().top;
+        let lo = 0, hi = items.length - 1, found = -1;
+        while (lo <= hi) {
+            const mid = (lo + hi) >> 1;
+            if (items[mid].el.getBoundingClientRect().top <= areaTop + 4) { found = mid; lo = mid + 1; } else { hi = mid - 1; }
+        }
+        const atHeading = found >= 0 && Math.abs(items[found].el.getBoundingClientRect().top - areaTop) <= 12;
+        if (found >= 0) navLastKnown = { tab: tabNow, key: navItemKey(items[found]) };
+        return { idx: found, atHeading };
+    }
+
+    // טקסט הכותרת מגיע גולמי מתוכן העניינים - מעבירים אותו דרך אותם סינונים של טקסט הספר (הסתרת שמות
+    // קדושים כולל י"י, ניקוד, טעמים, פיסוק), כדי שהכותרת בסרגל תוצג בדיוק כמו בגוף הטקסט.
+    let navTitleFilterCache = { key: '', value: '' };
+    function filterNavTitleText(text) {
+        if (!text) return '';
+        const key = [text, currentSettings.holyNamesFilter, currentSettings.holyNamesDisplay, currentSettings.holyNamesYY,
+            currentSettings.holyNamesAggressiveAlef, currentSettings.hideNikud, currentSettings.hideTeamim,
+            currentSettings.hidePunctuation].join('|');
+        if (navTitleFilterCache.key === key) return navTitleFilterCache.value;
+        let value = text;
+        try {
+            const escaped = text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+            const tmp = document.createElement('div');
+            tmp.innerHTML = applyTextFilters(escaped);
+            value = tmp.textContent;
+        } catch (e) { value = text; }
+        navTitleFilterCache = { key, value };
+        return value;
+    }
+
+    // שרשרת הכותרות של המיקום הנוכחי, מרמה 1 עד 5: הכותרת הנוכחית ועליה הכותרות הגבוהות יותר שהיא כלולה
+    // בהן (למשל: סימן כ, סעיף ז, בעניין חליצה) - כל אחת מסוננת כמו טקסט הספר, ומחוברות בפסיק.
+    function buildNavHeadingChainText(items, idx) {
+        if (idx < 0 || idx >= items.length) return '';
+        const chain = [items[idx]];
+        let need = items[idx].level;
+        for (let i = idx - 1; i >= 0 && need > NAV_HEADING_MIN_LEVEL; i--) {
+            if (items[i].level < need) {
+                chain.push(items[i]);
+                need = items[i].level;
+            }
+        }
+        chain.reverse();
+        return chain.map(it => filterNavTitleText(it.text)).filter(Boolean).join(', ');
+    }
+
+    function updateNavBar() {
+        const previewArea = document.getElementById('preview-area');
+        if (!previewArea) return;
+        const tab = tabs[activeTabIndex];
+        const hasBook = Boolean(tab && !tab.isNewBookTab);
+
+        // ----- מונה עמודים -----
+        const input = document.getElementById('page-indicator-input');
+        const totalEl = document.getElementById('page-indicator-total');
+        if (input && totalEl) {
+            const pages = hasBook ? Array.from(previewArea.querySelectorAll('.print-page')) : [];
+            const total = pages.length;
+            const cur = total ? getNavCurrentPageIndex(pages) + 1 : 0;
+            totalEl.textContent = String(total);
+            input.style.width = (Math.max(String(total).length, 2) + 1) + 'ch';
+            if (document.activeElement !== input) input.value = String(cur);
+            input.disabled = total === 0;
+        }
+
+        // ----- כותרת ניווט -----
+        const center = document.getElementById('toolbar-nav-center');
+        const titleEl = document.getElementById('nav-heading-title');
+        const prevBtn = document.getElementById('btn-heading-prev');
+        const nextBtn = document.getElementById('btn-heading-next');
+        if (center && titleEl && prevBtn && nextBtn) {
+            const items = hasBook ? getNavHeadingItems() : [];
+            const state = computeCurrentNavHeading(items);
+            const cur = state.idx >= 0 ? items[state.idx] : null;
+            const shownTitle = cur ? buildNavHeadingChainText(items, state.idx) : '';
+            titleEl.textContent = shownTitle;
+            center.classList.toggle('nav-center-empty', items.length === 0);
+            // מצב "מושבת" ויזואלי בלבד (בלי תכונת disabled) - כדי שלחיצה לא תיבלע אם המצב מתחלף בזמן הלחיצה
+            const prevOff = items.length === 0 || state.idx < 0 || (state.idx === 0 && state.atHeading);
+            const nextOff = items.length === 0 || state.idx >= items.length - 1;
+            prevBtn.classList.toggle('is-disabled', prevOff);
+            nextBtn.classList.toggle('is-disabled', nextOff);
+            prevBtn.setAttribute('aria-disabled', prevOff ? 'true' : 'false');
+            nextBtn.setAttribute('aria-disabled', nextOff ? 'true' : 'false');
+            const tip = document.getElementById('nav-heading-tooltip');
+            if (tip && tip.classList.contains('visible')) tip.textContent = shownTitle;
+        }
+        layoutNavCenter();
+    }
+
+    // ---- תיבת מספר העמוד ----
+    function onPageIndicatorKeydown(e) {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            const input = e.target;
+            const previewArea = document.getElementById('preview-area');
+            const total = previewArea.querySelectorAll('.print-page').length;
+            const n = parseInt(String(input.value).replace(/[^0-9]/g, ''), 10);
+            if (!isNaN(n) && total > 0) {
+                goToPageIndex(Math.min(Math.max(n, 1), total) - 1);
+            }
+            input.blur();
+        } else if (e.key === 'Escape') {
+            e.preventDefault();
+            e.target.blur();
+        }
+        e.stopPropagation(); // קיצורי המקלדת הכלליים לא צריכים להגיב להקלדה בתיבה
+    }
+
+    function onPageIndicatorBlur() {
+        // חזרה להצגת העמוד הנוכחי בפועל (גם אם הוקלד ערך שלא אושר)
+        scheduleNavBarUpdate();
+        setTimeout(updateNavBar, 120);
+    }
+
+    // ---- מעבר לכותרת קודמת/הבאה ----
+    function scrollElementToTopInScrollView(el) {
+        const previewArea = document.getElementById('preview-area');
+        const delta = el.getBoundingClientRect().top - previewArea.getBoundingClientRect().top;
+        previewArea.scrollTo({ top: Math.max(0, previewArea.scrollTop + delta - 6), behavior: 'instant' });
+    }
+
+    function findMarkedElementForLine(targetIdx) {
+        const previewArea = document.getElementById('preview-area');
+        const marked = previewArea.querySelectorAll('[data-line-idx]');
+        let bestEl = null, bestIdx = -1;
+        for (let i = 0; i < marked.length; i++) {
+            const v = parseInt(marked[i].getAttribute('data-line-idx'), 10);
+            if (isNaN(v) || v > targetIdx) continue;
+            if (v > bestIdx) { bestIdx = v; bestEl = marked[i]; }
+        }
+        return bestEl;
+    }
+
+    function goToAdjacentHeading(dir) {
+        const items = getNavHeadingItems();
+        if (items.length === 0) return;
+        const state = computeCurrentNavHeading(items);
+        let target;
+        if (dir > 0) {
+            target = state.idx + 1;
+        } else {
+            // באמצע קטע (לא בראש הכותרת הנוכחית) - "הקודמת" חוזרת לראש הכותרת הנוכחית, ורק משם לקודמת לה
+            target = (state.idx >= 0 && !state.atHeading) ? state.idx : state.idx - 1;
+        }
+        if (target < 0 || target >= items.length) return;
+        const item = items[target];
+        const previewArea = document.getElementById('preview-area');
+        const isBook = Boolean(currentSettings.isBookView);
+
+        let targetEl = item.el;
+        let pageIdx = -1;
+        if (item.lineIndex !== null) {
+            targetEl = findMarkedElementForLine(item.lineIndex);
+            pageIdx = locatePageIndexForLineIndex(item.lineIndex);
+        } else if (targetEl) {
+            const pe = targetEl.closest('.print-page');
+            pageIdx = pe ? Array.from(previewArea.querySelectorAll('.print-page')).indexOf(pe) : -1;
+        }
+        if (pageIdx < 0 && !targetEl) return;
+
+        isScrollingFromTOC = true;
+        if (isBook) {
+            if (pageIdx >= 0) {
+                currentLeaf = Math.floor(pageIdx / 2) + (pageIdx % 2);
+                updateBookViewPages(true);
+            }
+        } else if (targetEl) {
+            scrollElementToTopInScrollView(targetEl);
+        } else {
+            scrollToPageInScrollView(pageIdx);
+        }
+        setTimeout(() => { isScrollingFromTOC = false; }, 1500);
+
+        const pagesNow = Array.from(previewArea.querySelectorAll('.print-page'));
+        const lockKey = navItemKey(item);
+        navHeadingLock = { key: lockKey, isBook, pageIdx: getNavCurrentPageIndex(pagesNow), scrollTop: previewArea.scrollTop };
+        navLastKnown = { tab: tabs[activeTabIndex], key: lockKey };
+        // אחרי שהפריסה מתייצבת (בטעינה הדרגתית הזום/הגודל של עמודים יכולים להשתנות ברגע אחרי הקפיצה) -
+        // מיישרים שוב את הכותרת לראש התצוגה, אלא אם המשתמש כבר גלל בעצמו
+        const realign = () => {
+            if (!navHeadingLock || navHeadingLock.key !== lockKey) return;
+            if (!isBook && targetEl && targetEl.isConnected && Math.abs(previewArea.scrollTop - navHeadingLock.scrollTop) <= 3) {
+                const drift = targetEl.getBoundingClientRect().top - previewArea.getBoundingClientRect().top;
+                if (Math.abs(drift - 6) > 3) scrollElementToTopInScrollView(targetEl);
+            }
+            if (navHeadingLock && navHeadingLock.key === lockKey) {
+                navHeadingLock.scrollTop = previewArea.scrollTop;
+                if (isBook) navHeadingLock.pageIdx = getNavCurrentPageIndex(Array.from(previewArea.querySelectorAll('.print-page')));
+            }
+            scheduleNavBarUpdate();
+        };
+        requestAnimationFrame(() => { realign(); requestAnimationFrame(realign); });
+        scheduleNavBarUpdate();
+    }
+
+    // ---- רוחב קבוע וממורכז לכותרת; מוסתרת כשאין מקום (ובתצוגה מפוצלת) ----
+    function layoutNavCenter() {
+        const center = document.getElementById('toolbar-nav-center');
+        const toolbar = document.getElementById('main-toolbar');
+        if (!center || !toolbar) return;
+        const splitHidden = document.body.classList.contains('split-pane-b') ||
+            Boolean(document.querySelector('#split-view-wrapper.split-active'));
+        if (splitHidden || toolbar.offsetWidth === 0) {
+            center.classList.add('nav-center-hidden');
+            toolbar.style.removeProperty('--nav-start-max');
+            return;
+        }
+        const startSide = toolbar.querySelector('.toolbar-side-start');
+        const sides = toolbar.querySelectorAll(':scope > .toolbar-side');
+        const endSide = sides[sides.length - 1];
+        const padding = 14;
+        const gapMargin = 10;
+        // הצד הימני: שני הכפתורים + מקום מינימלי לשם הספר; הצד השמאלי: כל הכפתורים (לא מצטמצם)
+        let startFixed = 0;
+        if (startSide) {
+            startSide.querySelectorAll(':scope > button').forEach(b => { startFixed += b.offsetWidth + 6; });
+            startFixed += 70;
+        }
+        const tbRect = toolbar.getBoundingClientRect();
+        const endRight = endSide ? (endSide.getBoundingClientRect().right - tbRect.left) : padding;
+        // האזור הפנוי בין שני הצדדים (בקואורדינטות מהקצה השמאלי של הסרגל)
+        const gapL = endRight + gapMargin;
+        const gapR = toolbar.clientWidth - padding - startFixed - gapMargin;
+        const gapW = gapR - gapL;
+        const width = Math.min(NAV_CENTER_MAX_WIDTH, gapW);
+        if (width < NAV_CENTER_MIN_WIDTH) {
+            center.classList.add('nav-center-hidden');
+            toolbar.style.removeProperty('--nav-start-max');
+            return;
+        }
+        center.classList.remove('nav-center-hidden');
+        // ממורכזת בסרגל כשיש מקום; אם לא - זזה בדיוק כמה שצריך כדי לא לכסות אף לחצן
+        const idealLeft = toolbar.clientWidth / 2 - width / 2;
+        const left = Math.max(gapL, Math.min(idealLeft, gapR - width));
+        center.style.setProperty('--nav-center-w', Math.floor(width) + 'px');
+        center.style.setProperty('--nav-center-left', Math.floor(left) + 'px');
+        // שם הספר (בצד הימני) לא נכנס מתחת לכותרת הממורכזת
+        const startMax = toolbar.clientWidth - padding - (left + width) - gapMargin;
+        toolbar.style.setProperty('--nav-start-max', Math.max(0, Math.floor(startMax)) + 'px');
+    }
+
+    // ---- בועת הכותרת המלאה בריחוף ----
+    (function initNavBar() {
+        if (window.top !== window.self) document.body.classList.add('split-pane-b');
+
+        const tip = document.createElement('div');
+        tip.id = 'nav-heading-tooltip';
+        tip.className = 'no-print';
+        document.body.appendChild(tip);
+
+        const wrap = document.getElementById('nav-heading-title-wrap');
+        if (wrap) {
+            wrap.addEventListener('mouseenter', () => {
+                const full = (document.getElementById('nav-heading-title') || {}).textContent || '';
+                if (!full) return;
+                tip.textContent = full;
+                const toolbar = document.getElementById('main-toolbar');
+                const tbRect = toolbar ? toolbar.getBoundingClientRect() : wrap.getBoundingClientRect();
+                const wRect = wrap.getBoundingClientRect();
+                tip.style.top = (tbRect.bottom + 4) + 'px';
+                tip.style.left = '0px';
+                tip.classList.add('visible');
+                const tw = tip.offsetWidth;
+                let left = wRect.left + wRect.width / 2 - tw / 2;
+                left = Math.max(6, Math.min(left, window.innerWidth - tw - 6));
+                tip.style.left = left + 'px';
+            });
+            wrap.addEventListener('mouseleave', () => tip.classList.remove('visible'));
+        }
+
+        const previewArea = document.getElementById('preview-area');
+        if (previewArea) {
+            previewArea.addEventListener('scroll', scheduleNavBarUpdate, { passive: true });
+            // עמודים שנוספים/מוחלפים (טעינה הדרגתית, מעבר טאב, עימוד מחדש) - עדכון המונה והכותרת
+            new MutationObserver(scheduleNavBarUpdate).observe(previewArea, { childList: true, subtree: true });
+        }
+        window.addEventListener('resize', scheduleNavBarUpdate);
+        if (typeof ResizeObserver !== 'undefined') {
+            const ro = new ResizeObserver(scheduleNavBarUpdate);
+            const tb = document.getElementById('main-toolbar');
+            if (tb) {
+                ro.observe(tb);
+                tb.querySelectorAll(':scope > .toolbar-side').forEach(el => ro.observe(el));
+            }
+        }
+        scheduleNavBarUpdate();
+    })();
 
     /* ==========================================================================================
        תצוגה מפוצלת (Split View) — מודול עצמאי לחלוטין.
