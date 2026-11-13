@@ -1,0 +1,24 @@
+name: Publish to Otzaria store
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "src/**"
+      - ".github/workflows/publish-store.yml"
+  workflow_dispatch:
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # מאמת, בונה ומפרסם לחנות (מדלג אוטומטית אם הגרסה כבר קיימת בחנות)
+      - uses: Otzaria/otzaria-plugin-validator@v1
+        with:
+          path: src
+          otzaria-user: ${{ secrets.OTZARIA_USER }}
+          otzaria-password: ${{ secrets.OTZARIA_PASSWORD }}
+          # דחיפה ראשונה של תוסף חדש בלבד: צילום מסך חובה. הוסיפו קובץ ושחררו את השורה:
+          # screenshots: screenshots/main.png
